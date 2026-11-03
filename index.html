@@ -9,15 +9,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #08080a;
-      --surface: #101014;
-      --surface-hover: #14141a;
-      --border: #22222b;
-      --border-active: #818cf8;
-      --text: #f4f4f6;
-      --text-muted: #8a8a9b;
+      --bg: #030305;
+      --surface: rgba(12, 12, 16, 0.85);
+      --surface-hover: rgba(20, 20, 26, 0.95);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-bright: rgba(255, 255, 255, 0.4);
+      --text: #ffffff;
+      --text-muted: #888899;
       --radius: 6px;
       --cut: 14px;
+      --cut-sm: 8px;
     }
 
     * {
@@ -30,10 +31,10 @@
     body {
       background-color: var(--bg);
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 55%),
-        linear-gradient(to right, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
-      background-size: 100% 100%, 40px 40px, 40px 40px;
+        radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.08) 0%, transparent 60%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
       color: var(--text);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       min-height: 100vh;
@@ -47,6 +48,8 @@
     .container {
       width: 100%;
       max-width: 540px;
+      position: relative;
+      z-index: 1;
     }
 
     /* Header */
@@ -54,12 +57,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
-      padding: 14px 16px;
-      background: rgba(16, 16, 20, 0.75);
+      margin-bottom: 28px;
+      padding: 16px;
+      background: rgba(10, 10, 12, 0.6);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
     }
 
     .brand-wrap {
@@ -69,41 +74,44 @@
     }
 
     .brand-logo {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       background: var(--text);
       color: var(--bg);
       font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
-      font-size: 13px;
-      border-radius: 5px;
+      font-size: 14px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
     }
 
     .brand-text h1 {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      line-height: 1.1;
+      letter-spacing: 0.1em;
+      line-height: 1.2;
     }
 
     .brand-text span {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
 
     .status-badge {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
-      color: #34d399;
+      color: #10b981;
       background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      padding: 5px 10px;
-      border-radius: 5px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      padding: 6px 12px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -114,43 +122,48 @@
       height: 6px;
       background: #10b981;
       border-radius: 50%;
-      box-shadow: 0 0 8px #10b981;
+      box-shadow: 0 0 10px #10b981;
     }
 
-    /* Section Header */
-    .section-head {
+    /* Modal Overlay (Glassmorphism sâu) */
+    .alert-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 2, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      margin-bottom: 10px;
-      padding: 0 2px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      padding: 16px;
+      z-index: 999;
+      opacity: 1;
+      visibility: visible;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .tab-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 22px;
+    .alert-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      backdrop-filter: blur(0px);
     }
 
-    /* Tab vát góc chéo - Ban đầu phẳng, chạm vào sáng viền & nổi nhẹ */
-    .tab-wrap {
-      transition: transform 0.2s ease;
-      cursor: pointer;
+    /* Bảng Thông Báo HUD */
+    .alert-box {
+      width: 100%;
+      max-width: 440px;
+      transform: translateY(0) scale(1);
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
     }
 
-    .tab-wrap.active {
-      transform: translateY(-2px);
-      z-index: 2;
+    .alert-overlay.hidden .alert-box {
+      transform: translateY(20px) scale(0.95);
     }
 
-    .tab-border {
-      background: var(--border);
+    /* Viền kim loại sáng ở 2 góc chéo */
+    .alert-border {
+      background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.6) 100%);
       padding: 1px;
       clip-path: polygon(
         var(--cut) 0,
@@ -160,20 +173,11 @@
         0 100%,
         0 var(--cut)
       );
-      transition: background 0.2s ease;
     }
 
-    .tab-wrap.active .tab-border {
-      background: rgba(255, 255, 255, 0.35);
-    }
-
-    .tab-inner {
-      background: var(--surface);
-      padding: 16px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
+    .alert-inner {
+      background: rgba(12, 12, 14, 0.95);
+      padding: 28px 24px;
       clip-path: polygon(
         var(--cut) 0,
         100% 0,
@@ -182,23 +186,186 @@
         0 100%,
         0 var(--cut)
       );
-      transition: background 0.2s ease;
     }
 
-    .tab-wrap:hover .tab-inner {
+    .alert-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .alert-title svg {
+      width: 20px;
+      height: 20px;
+      color: var(--text);
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.4));
+    }
+
+    .alert-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #a1a1aa;
+      margin-bottom: 24px;
+    }
+
+    .alert-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .alert-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+    }
+
+    .alert-btn .btn-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .alert-btn:hover {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+    
+    .alert-btn:hover svg {
+      color: var(--bg);
+      transform: translateX(4px);
+    }
+
+    .alert-btn svg {
+      transition: transform 0.2s ease;
+    }
+
+    .alert-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Nút Đóng Thông Báo (Thiết kế thanh thoát) */
+    .btn-close-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 0;
+      transition: color 0.2s ease;
+    }
+
+    .btn-close-text:hover {
+      color: var(--text);
+    }
+
+    .btn-close-text svg {
+      transition: transform 0.2s ease;
+    }
+    
+    .btn-close-text:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Section Header */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 0 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .tab-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    /* Tab vát góc - Thêm HUD drop-shadow khi chạm */
+    .tab-wrap-outer {
+      transition: filter 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+    }
+
+    .tab-wrap-outer.active {
+      transform: translateY(-4px);
+      filter: drop-shadow(0 12px 24px rgba(255, 255, 255, 0.08));
+      z-index: 2;
+    }
+
+    .tab-border {
+      background: var(--border);
+      padding: 1px;
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      transition: background 0.3s ease;
+    }
+
+    .tab-wrap-outer.active .tab-border {
+      background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.7) 100%);
+    }
+
+    .tab-inner {
+      background: var(--surface);
+      backdrop-filter: blur(8px);
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      transition: background 0.3s ease;
+    }
+
+    .tab-wrap-outer:hover .tab-inner {
       background: var(--surface-hover);
+    }
+    
+    .tab-wrap-outer.active .tab-inner {
+      background: rgba(20, 20, 25, 0.98);
     }
 
     .item-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
     }
 
     .icon-box {
-      width: 42px;
-      height: 42px;
-      background: #15151c;
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       display: flex;
@@ -206,18 +373,19 @@
       justify-content: center;
       flex-shrink: 0;
       color: var(--text-muted);
-      transition: color 0.2s ease, border-color 0.2s ease;
+      transition: all 0.3s ease;
     }
 
-    .tab-wrap.active .icon-box {
-      border-color: rgba(255, 255, 255, 0.25);
+    .tab-wrap-outer.active .icon-box {
+      border-color: rgba(255, 255, 255, 0.4);
       color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .item-meta {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
     }
 
     .item-title {
@@ -232,19 +400,19 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 10px;
       font-weight: 500;
-      padding: 2px 6px;
+      padding: 3px 8px;
       border-radius: 4px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #c4c4d0;
+      color: #b0b0b8;
     }
 
     .item-sub {
-      font-size: 12.5px;
+      font-size: 13px;
       color: var(--text-muted);
     }
 
-    /* Nút bấm */
+    /* Nút bấm (Trong Tab) */
     .actions {
       display: flex;
       align-items: center;
@@ -256,9 +424,9 @@
       font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 500;
-      padding: 8px 14px;
+      padding: 9px 16px;
       border-radius: var(--radius);
-      background: #17171e;
+      background: rgba(255, 255, 255, 0.05);
       color: var(--text);
       border: 1px solid var(--border);
       text-decoration: none;
@@ -267,27 +435,28 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.15s ease;
+      transition: all 0.2s ease;
     }
 
     .btn:hover {
-      background: #22222c;
-      border-color: #3f3f4e;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
-    .tab-wrap.active .btn-main {
+    .tab-wrap-outer.active .btn-main {
       background: var(--text);
       color: var(--bg);
       border-color: var(--text);
       font-weight: 600;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
     }
 
-    .tab-wrap.active .btn-main:hover {
-      background: #e4e4e7;
+    .tab-wrap-outer.active .btn-main:hover {
+      background: #e0e0e0;
     }
 
     .btn-icon {
-      padding: 8px 9px;
+      padding: 9px 10px;
       color: var(--text-muted);
     }
 
@@ -298,20 +467,20 @@
     /* Toast thông báo */
     .toast {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      bottom: 32px;
+      right: 32px;
       background: var(--text);
       color: var(--bg);
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
       font-weight: 600;
-      padding: 10px 16px;
+      padding: 12px 20px;
       border-radius: var(--radius);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(15px);
       pointer-events: none;
-      transition: all 0.2s ease;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
       z-index: 10;
     }
 
@@ -337,6 +506,7 @@
       }
       .actions {
         width: 100%;
+        margin-top: 4px;
       }
       .btn-main {
         flex: 1;
@@ -346,6 +516,46 @@
 </head>
 <body>
 
+  <!-- Modal Overlay -->
+  <div id="alertOverlay" class="alert-overlay">
+    <div class="alert-box">
+      <div class="alert-border">
+        <div class="alert-inner">
+          <div class="alert-title">
+            <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            THÔNG BÁO HỆ THỐNG
+          </div>
+          <div class="alert-text">
+            Chào mừng đến với hệ thống 0704! Hãy tham gia ngay các kênh Telegram chính thức để cập nhật File bản mới nhất liên tục mỗi ngày.
+          </div>
+          <div class="alert-actions">
+            <a href="https://t.me/x0704cheatios" target="_blank" rel="noopener" class="alert-btn">
+              <div class="btn-left">
+                <svg viewBox="0 0 24 24"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                Channel 1 (Main)
+              </div>
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <a href="https://t.me/x0704cheat" target="_blank" rel="noopener" class="alert-btn">
+              <div class="btn-left">
+                <svg viewBox="0 0 24 24"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                Channel 2 (File)
+              </div>
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+          
+          <div class="alert-footer">
+            <button class="btn-close-text" onclick="closeAlert()">
+              Đóng thông báo 
+              <svg viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <!-- Header -->
     <header class="header">
@@ -353,7 +563,7 @@
         <div class="brand-logo">07</div>
         <div class="brand-text">
           <h1>0704</h1>
-          <span>GET KEY & DOWLOAD FILE</span>
+          <span>KEY & FILE PORTAL</span>
         </div>
       </div>
       <div class="status-badge">
@@ -370,7 +580,7 @@
 
     <div class="tab-group">
       <!-- Tab 1: Get Key -->
-      <div class="tab-wrap" onclick="activateTab(this, event)">
+      <div class="tab-wrap-outer" onclick="activateTab(this, event)">
         <div class="tab-border">
           <div class="tab-inner">
             <div class="item-left">
@@ -399,8 +609,8 @@
         </div>
       </div>
 
-      <!-- Tab 2: Mua Key (Bot @obiday_bot) -->
-      <div class="tab-wrap" onclick="activateTab(this, event)">
+      <!-- Tab 2: Mua Key -->
+      <div class="tab-wrap-outer" onclick="activateTab(this, event)">
         <div class="tab-border">
           <div class="tab-inner">
             <div class="item-left">
@@ -438,7 +648,7 @@
 
     <div class="tab-group">
       <!-- Tab 3: Free Fire Dylib -->
-      <div class="tab-wrap" onclick="activateTab(this, event)">
+      <div class="tab-wrap-outer" onclick="activateTab(this, event)">
         <div class="tab-border">
           <div class="tab-inner">
             <div class="item-left">
@@ -450,7 +660,7 @@
                   Free Fire Dylib
                   <span class="tag">.DYLIB</span>
                 </div>
-                <div class="item-sub">Tải trực tiếp qua kênh Telegram</div>
+                <div class="item-sub">Inject qua TrollFools</div>
               </div>
             </div>
 
@@ -468,7 +678,7 @@
       </div>
 
       <!-- Tab 4: AOV TIPA -->
-      <div class="tab-wrap" onclick="activateTab(this, event)">
+      <div class="tab-wrap-outer" onclick="activateTab(this, event)">
         <div class="tab-border">
           <div class="tab-inner">
             <div class="item-left">
@@ -503,7 +713,15 @@
   <div id="toast" class="toast">ĐÃ SAO CHÉP LIÊN KẾT</div>
 
   <script>
-    const tabs = document.querySelectorAll('.tab-wrap');
+    const tabs = document.querySelectorAll('.tab-wrap-outer');
+    const alertOverlay = document.getElementById('alertOverlay');
+
+    function closeAlert() {
+      alertOverlay.classList.add('hidden');
+      setTimeout(() => {
+        alertOverlay.style.display = 'none';
+      }, 400);
+    }
 
     function activateTab(selectedTab, event) {
       event.stopPropagation();
@@ -520,7 +738,7 @@
     });
 
     function copyUrl(url, btnElement) {
-      const parentTab = btnElement.closest('.tab-wrap');
+      const parentTab = btnElement.closest('.tab-wrap-outer');
       if (parentTab) {
         tabs.forEach(tab => tab.classList.remove('active'));
         parentTab.classList.add('active');
@@ -529,7 +747,7 @@
       navigator.clipboard.writeText(url).then(() => {
         const toast = document.getElementById('toast');
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 1800);
+        setTimeout(() => toast.classList.remove('show'), 2000);
       });
     }
   </script>
