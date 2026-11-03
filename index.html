@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>0704 — Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #08080a;
+      --surface: #101014;
+      --surface-hover: #14141a;
+      --border: #22222b;
+      --border-active: #818cf8;
+      --text: #f4f4f6;
+      --text-muted: #8a8a9b;
+      --radius: 6px;
+      --cut: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 55%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px;
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 32px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 540px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 14px 16px;
+      background: rgba(16, 16, 20, 0.75);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(8px);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: var(--text);
+      color: var(--bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-text h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.1;
+    }
+
+    .brand-text span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .status-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    /* Section Header */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 0 2px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .tab-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    /* Tab vát góc chéo - Ban đầu phẳng, chạm vào sáng viền & nổi nhẹ */
+    .tab-wrap {
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .tab-wrap.active {
+      transform: translateY(-2px);
+      z-index: 2;
+    }
+
+    .tab-border {
+      background: var(--border);
+      padding: 1px;
+      clip-path: polygon(
+        var(--cut) 0,
+        100% 0,
+        100% calc(100% - var(--cut)),
+        calc(100% - var(--cut)) 100%,
+        0 100%,
+        0 var(--cut)
+      );
+      transition: background 0.2s ease;
+    }
+
+    .tab-wrap.active .tab-border {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .tab-inner {
+      background: var(--surface);
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      clip-path: polygon(
+        var(--cut) 0,
+        100% 0,
+        100% calc(100% - var(--cut)),
+        calc(100% - var(--cut)) 100%,
+        0 100%,
+        0 var(--cut)
+      );
+      transition: background 0.2s ease;
+    }
+
+    .tab-wrap:hover .tab-inner {
+      background: var(--surface-hover);
+    }
+
+    .item-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .icon-box {
+      width: 42px;
+      height: 42px;
+      background: #15151c;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--text-muted);
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .tab-wrap.active .icon-box {
+      border-color: rgba(255, 255, 255, 0.25);
+      color: var(--text);
+    }
+
+    .item-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .item-title {
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #c4c4d0;
+    }
+
+    .item-sub {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    /* Nút bấm */
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: var(--radius);
+      background: #17171e;
+      color: var(--text);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover {
+      background: #22222c;
+      border-color: #3f3f4e;
+    }
+
+    .tab-wrap.active .btn-main {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      font-weight: 600;
+    }
+
+    .tab-wrap.active .btn-main:hover {
+      background: #e4e4e7;
+    }
+
+    .btn-icon {
+      padding: 8px 9px;
+      color: var(--text-muted);
+    }
+
+    .btn-icon:hover {
+      color: var(--text);
+    }
+
+    /* Toast thông báo */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--text);
+      color: var(--bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @media (max-width: 500px) {
+      .tab-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .actions {
+        width: 100%;
+      }
+      .btn-main {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand-wrap">
+        <div class="brand-logo">07</div>
+        <div class="brand-text">
+          <h1>0704</h1>
+          <span>GET KEY & DOWLOAD FILE</span>
+        </div>
+      </div>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        ONLINE
+      </div>
+    </header>
+
+    <!-- Phần 1: Hệ thống Key -->
+    <div class="section-head">
+      <span>01 // Hệ thống Key</span>
+      <span>XÁC THỰC</span>
+    </div>
+
+    <div class="tab-group">
+      <!-- Tab 1: Get Key -->
+      <div class="tab-wrap" onclick="activateTab(this, event)">
+        <div class="tab-border">
+          <div class="tab-inner">
+            <div class="item-left">
+              <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+              </div>
+              <div class="item-meta">
+                <div class="item-title">
+                  Get Key
+                  <span class="tag">FREE KEY</span>
+                </div>
+                <div class="item-sub">Vượt link lấy mã kích hoạt miễn phí</div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-icon" onclick="copyUrl('https://hthseverkey.fun/getkey.php?public=a73255922a5a4df25de624898714c500cfeaae7f5b3ad3948f16cf390b1285b3', this)" title="Sao chép link">
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+              <a href="https://hthseverkey.fun/getkey.php?public=a73255922a5a4df25de624898714c500cfeaae7f5b3ad3948f16cf390b1285b3" target="_blank" rel="noopener" class="btn btn-main">
+                Get Key
+                <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Mua Key (Bot @obiday_bot) -->
+      <div class="tab-wrap" onclick="activateTab(this, event)">
+        <div class="tab-border">
+          <div class="tab-inner">
+            <div class="item-left">
+              <div class="icon-box">
+                <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+              </div>
+              <div class="item-meta">
+                <div class="item-title">
+                  Mua Key VIP
+                  <span class="tag">@obiday_bot</span>
+                </div>
+                <div class="item-sub">Mua key tự động 24/7 qua Bot Telegram</div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-icon" onclick="copyUrl('https://t.me/obiday_bot?start=shop', this)" title="Sao chép link">
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+              <a href="https://t.me/obiday_bot?start=shop" target="_blank" rel="noopener" class="btn btn-main">
+                Mua Key
+                <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phần 2: Danh sách File -->
+    <div class="section-head">
+      <span>02 // Danh sách bản cài</span>
+      <span>2 FILES</span>
+    </div>
+
+    <div class="tab-group">
+      <!-- Tab 3: Free Fire Dylib -->
+      <div class="tab-wrap" onclick="activateTab(this, event)">
+        <div class="tab-border">
+          <div class="tab-inner">
+            <div class="item-left">
+              <div class="icon-box">
+                <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              </div>
+              <div class="item-meta">
+                <div class="item-title">
+                  Free Fire Dylib
+                  <span class="tag">.DYLIB</span>
+                </div>
+                <div class="item-sub">Tải trực tiếp qua kênh Telegram</div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-icon" onclick="copyUrl('https://t.me/x0704cheat/562', this)" title="Sao chép link">
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+              <a href="https://t.me/x0704cheat/562" target="_blank" rel="noopener" class="btn btn-main">
+                Tải File
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: AOV TIPA -->
+      <div class="tab-wrap" onclick="activateTab(this, event)">
+        <div class="tab-border">
+          <div class="tab-inner">
+            <div class="item-left">
+              <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              </div>
+              <div class="item-meta">
+                <div class="item-title">
+                  AOV TIPA
+                  <span class="tag">.TIPA</span>
+                </div>
+                <div class="item-sub">Hỗ trợ cài đặt qua TrollStore / Sideload</div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-icon" onclick="copyUrl('https://t.me/x0704cheat/563', this)" title="Sao chép link">
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+              <a href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="btn btn-main">
+                Tải File
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thông báo Copy -->
+  <div id="toast" class="toast">ĐÃ SAO CHÉP LIÊN KẾT</div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab-wrap');
+
+    function activateTab(selectedTab, event) {
+      event.stopPropagation();
+      tabs.forEach(tab => {
+        if (tab !== selectedTab) {
+          tab.classList.remove('active');
+        }
+      });
+      selectedTab.classList.add('active');
+    }
+
+    document.addEventListener('click', () => {
+      tabs.forEach(tab => tab.classList.remove('active'));
+    });
+
+    function copyUrl(url, btnElement) {
+      const parentTab = btnElement.closest('.tab-wrap');
+      if (parentTab) {
+        tabs.forEach(tab => tab.classList.remove('active'));
+        parentTab.classList.add('active');
+      }
+
+      navigator.clipboard.writeText(url).then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 1800);
+      });
+    }
+  </script>
+</body>
+</html>
