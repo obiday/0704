@@ -141,7 +141,6 @@ body {
   backdrop-filter: blur(0px);
 }
 
-/* Bảng Thông Báo HUD */
 .alert-box {
   width: 100%;
   max-width: 440px;
@@ -154,7 +153,6 @@ body {
   transform: translateY(20px) scale(0.95);
 }
 
-/* Viền kim loại sáng ở 2 góc chéo */
 .alert-border {
   background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.6) 100%);
   padding: 1px;
@@ -257,7 +255,6 @@ body {
   justify-content: flex-end;
 }
 
-/* Nút Đóng Thông Báo */
 .btn-close-text {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
@@ -405,14 +402,7 @@ body {
   color: var(--text-muted);
 }
 
-/* Nút bấm (Trong Tab) */
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
+/* Nút bấm chung */
 .btn {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
@@ -492,34 +482,7 @@ svg {
   stroke-linejoin: round;
 }
 
-@media (max-width: 500px) {
-  .tab-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .actions {
-    width: 100%;
-    margin-top: 4px;
-  }
-  .btn-main {
-    flex: 1;
-  }
-}
-
-/* Trạng thái Bảo trì */
-.tab-wrap-outer.maintenance {
-  opacity: 0.4;
-  pointer-events: none;
-  filter: grayscale(100%);
-}
-
-.tag-danger {
-  background: rgba(239, 68, 68, 0.1) !important;
-  border-color: rgba(239, 68, 68, 0.2) !important;
-  color: #ef4444 !important;
-}
-
-/* Khung chứa Video */
+/* Định dạng Layout Video Demo */
 .tab-inner.has-video {
   flex-direction: column;
   align-items: stretch;
@@ -533,12 +496,26 @@ svg {
   width: 100%;
 }
 
+/* Trạng thái Bảo trì */
+.tab-wrap-outer.maintenance {
+  opacity: 0.4;
+  pointer-events: none;
+  filter: grayscale(100%);
+}
+
+/* Ẩn video hoàn toàn khi chưa bấm */
 .video-container {
   width: 100%;
   border-radius: 6px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: #000;
+  display: none; 
+  margin-top: 12px;
+}
+
+/* Chỉ hiện khi thêm class show */
+.video-container.show {
   display: flex;
 }
 
@@ -547,10 +524,36 @@ svg {
   display: block;
 }
 
+/* Sắp xếp cụm nút nằm ngang */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.action-right {
+  display: flex;
+  gap: 8px;
+}
+
+/* Tối ưu riêng giao diện cho điện thoại */
 @media (max-width: 500px) {
   .tab-top {
     flex-direction: column;
     align-items: flex-start;
   }
+  .actions {
+    flex-direction: column; 
+    width: 100%;
+    margin-top: 12px;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .action-right {
+    width: 100%;
+  }
+  .action-right .btn-main {
+    flex: 1;
+  }
 }
-
