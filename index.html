@@ -17,7 +17,6 @@
       --surface-hover: #14141c;
       --surface-active: #181822;
       --border: rgba(255, 255, 255, 0.14);
-      --border-bright: rgba(255, 255, 255, 0.38);
       --text: #ffffff;
       --text-muted: #8a8a9e;
       --radius: 6px;
@@ -447,18 +446,12 @@
       flex-shrink: 0;
     }
 
-    .action-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
     .btn {
       font-family: 'Inter', sans-serif;
       font-size: 12.5px;
       font-weight: 500;
       height: 36px;
-      padding: 0 14px;
+      padding: 0 15px;
       color: var(--text) !important;
       border: none;
       cursor: pointer;
@@ -494,16 +487,6 @@
       background: #22222e;
     }
 
-    .btn-icon {
-      width: 36px;
-      padding: 0;
-      color: var(--text-muted) !important;
-    }
-
-    .btn-icon:hover {
-      color: var(--text) !important;
-    }
-
     .tab-wrap-outer.active .btn-main {
       background: var(--text);
       color: var(--bg) !important;
@@ -514,35 +497,12 @@
       background: var(--text);
     }
 
-    /* Khu vực Nút Xem Demo tách riêng gọn gàng bên dưới */
-    .demo-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed rgba(255, 255, 255, 0.1);
-    }
-
-    .btn-demo {
-      width: 100%;
-      height: 34px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11.5px;
-      letter-spacing: 0.04em;
-      color: #c4c4d4 !important;
-    }
-
-    .btn-demo::before {
-      background: #12121a;
-    }
-
     .btn-demo.playing {
-      background: rgba(255, 255, 255, 0.45);
-      color: var(--text) !important;
+      background: rgba(255, 255, 255, 0.5);
     }
 
     .btn-demo.playing::before {
-      background: #1f1f2b;
+      background: #252534;
     }
 
     /* Trạng thái Bảo trì */
@@ -582,31 +542,6 @@
       display: block;
     }
 
-    /* Toast thông báo Copy */
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: var(--text);
-      color: var(--bg);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11.5px;
-      font-weight: 700;
-      padding: 11px 18px;
-      clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
-      opacity: 0;
-      transform: translateY(12px);
-      pointer-events: none;
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      z-index: 1000;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     svg {
       width: 15px;
       height: 15px;
@@ -628,15 +563,11 @@
 
       .actions {
         width: 100%;
-      }
-
-      .action-right {
-        width: 100%;
         display: flex;
         gap: 8px;
       }
 
-      .action-right .btn-main {
+      .actions .btn {
         flex: 1;
       }
     }
@@ -726,15 +657,10 @@
                 </div>
               </div>
               <div class="actions">
-                <div class="action-right">
-                  <button type="button" class="btn btn-icon" onclick="copyUrl('https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470', this, event)" title="Sao chép link">
-                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  </button>
-                  <a href="https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470" target="_blank" rel="noopener" class="btn btn-main">
-                    Get Key
-                    <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                  </a>
-                </div>
+                <a href="https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470" target="_blank" rel="noopener" class="btn btn-main">
+                  Get Key
+                  <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
               </div>
             </div>
           </div>
@@ -759,15 +685,10 @@
                 </div>
               </div>
               <div class="actions">
-                <div class="action-right">
-                  <button type="button" class="btn btn-icon" onclick="copyUrl('https://t.me/obiday_bot?start=shop', this, event)" title="Sao chép link">
-                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  </button>
-                  <a href="https://t.me/obiday_bot?start=shop" target="_blank" rel="noopener" class="btn btn-main">
-                    Mua Key
-                    <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                  </a>
-                </div>
+                <a href="https://t.me/obiday_bot?start=shop" target="_blank" rel="noopener" class="btn btn-main">
+                  Mua Key
+                  <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
               </div>
             </div>
           </div>
@@ -800,11 +721,9 @@
                 </div>
               </div>
               <div class="actions">
-                <div class="action-right">
-                  <button type="button" class="btn btn-main" disabled>
-                    Đang bảo trì
-                  </button>
-                </div>
+                <button type="button" class="btn btn-main" disabled>
+                  Đang bảo trì
+                </button>
               </div>
             </div>
           </div>
@@ -815,7 +734,6 @@
       <div class="tab-wrap-outer" onclick="activateTab(this, event)">
         <div class="tab-border">
           <div class="tab-inner">
-            <!-- Hàng 1: Thông tin + Nút Sao chép & Tải File đồng bộ với các Tab trên -->
             <div class="tab-row">
               <div class="item-left">
                 <div class="icon-box">
@@ -831,36 +749,26 @@
               </div>
               
               <div class="actions">
-                <div class="action-right">
-                  <button type="button" class="btn btn-icon" onclick="copyUrl('https://t.me/x0704cheat/563', this, event)" title="Sao chép link">
-                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  </button>
-                  <a href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="btn btn-main">
-                    Tải File
-                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                  </a>
-                </div>
+                <button type="button" class="btn btn-demo" onclick="toggleVideo(this, event)">
+                  <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  <span>Xem Demo</span>
+                </button>
+                <a href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="btn btn-main">
+                  Tải File
+                  <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </a>
               </div>
             </div>
             
-            <!-- Hàng 2: Thanh bấm Xem Video Demo riêng biệt + Khung phát Video -->
-            <div class="demo-wrap">
-              <button type="button" class="btn btn-demo" onclick="toggleVideo(this, event)">
-                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                <span>XEM VIDEO DEMO</span>
-              </button>
-              <div class="video-container">
-                <video src="https://github.com/obiday/0704/raw/refs/heads/main/v1c044g50000dbk7ig7og65ur0u39sb0.mp4" controls playsinline preload="metadata"></video>
-              </div>
+            <!-- Khung phát Video Demo -->
+            <div class="video-container">
+              <video src="https://github.com/obiday/0704/raw/refs/heads/main/v1c044g50000dbk7ig7og65ur0u39sb0.mp4" controls playsinline preload="metadata"></video>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Thông báo Copy -->
-  <div id="toast" class="toast">ĐÃ SAO CHÉP LIÊN KẾT</div>
 
   <script>
     const tabs = document.querySelectorAll('.tab-wrap-outer:not(.maintenance)');
@@ -885,21 +793,6 @@
       tabs.forEach(tab => tab.classList.remove('active'));
     });
 
-    function copyUrl(url, btnElement, event) {
-      if (event) event.stopPropagation();
-      const parentTab = btnElement.closest('.tab-wrap-outer');
-      if (parentTab) {
-        tabs.forEach(tab => tab.classList.remove('active'));
-        parentTab.classList.add('active');
-      }
-
-      navigator.clipboard.writeText(url).then(() => {
-        const toast = document.getElementById('toast');
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
-      });
-    }
-
     function toggleVideo(btnElement, event) {
       event.stopPropagation();
       const tabInner = btnElement.closest('.tab-inner');
@@ -911,7 +804,7 @@
         videoContainer.classList.remove('show');
         btnElement.classList.remove('playing');
         video.pause();
-        if (btnText) btnText.innerText = 'XEM VIDEO DEMO';
+        if (btnText) btnText.innerText = 'Xem Demo';
       } else {
         const parentTab = btnElement.closest('.tab-wrap-outer');
         if (parentTab) {
@@ -920,7 +813,7 @@
         }
         videoContainer.classList.add('show');
         btnElement.classList.add('playing');
-        if (btnText) btnText.innerText = 'ĐÓNG VIDEO DEMO';
+        if (btnText) btnText.innerText = 'Đóng Demo';
       }
     }
   </script>
