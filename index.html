@@ -327,7 +327,7 @@
       margin-bottom: 24px;
     }
 
-    /* Thanh chọn Tab Phân loại (FREE / BUY) vát góc đứt góc trên dưới */
+    /* Thanh chọn Tab Phân loại (FREE / BUY) chuẩn vát góc đứt góc trên dưới */
     .file-category-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -335,23 +335,15 @@
       margin-bottom: 12px;
     }
 
-    .cat-tab-outer {
-      cursor: pointer;
-      transition: filter 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .cat-tab-outer.active {
-      transform: translateY(-1px);
-    }
-
-    .cat-tab-border {
+    .cat-btn-wrap {
+      position: relative;
       background: var(--border);
       padding: 1px;
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
       transition: background 0.25s ease;
     }
 
-    .cat-tab-outer.active .cat-tab-border {
+    .cat-btn-wrap.active {
       background: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.65) 100%);
     }
 
@@ -367,36 +359,40 @@
       color: var(--text-muted);
       cursor: pointer;
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
-      transition: background 0.25s ease, color 0.25s ease;
+      transition: all 0.25s ease;
     }
 
-    .cat-tab-outer:hover .cat-btn {
+    .cat-btn-wrap:hover .cat-btn {
       background: var(--surface-hover);
       color: var(--text);
     }
 
-    .cat-tab-outer.active .cat-btn {
+    .cat-btn-wrap.active .cat-btn {
       background: var(--surface-active);
       color: var(--text);
     }
 
-    /* Vùng chứa các Pane file để giữ đồng bộ kích thước (tránh giật layout) */
-    .file-pane-wrapper {
+    /* Khu vực cố định chiều cao/kích thước để không bị giật giao diện khi đổi tab */
+    .file-container-wrapper {
       position: relative;
+      min-height: 145px; /* Giữ chỗ cố định cho các tab nội dung */
       margin-bottom: 24px;
     }
 
     /* Khu vực chứa nội dung danh sách file theo tab */
     .file-pane {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      position: absolute;
-      inset: 0;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.25s ease, visibility 0.25s ease;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      transform: translateY(4px);
     }
 
     .file-pane.active {
@@ -404,6 +400,7 @@
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
+      transform: translateY(0);
     }
 
     /* Khung Tab vát góc mục file */
@@ -781,22 +778,18 @@
       <span>FILES</span>
     </div>
 
-    <!-- Thanh chuyển đổi tab FREE / BUY (Kiểu vát đứt góc trên dưới) -->
+    <!-- Thanh chuyển đổi tab FREE / BUY (Phong cách đứt góc trên dưới) -->
     <div class="file-category-tabs">
-      <div class="cat-tab-outer active" onclick="switchFileTab('free', this)">
-        <div class="cat-tab-border">
-          <button type="button" class="cat-btn">FREE</button>
-        </div>
+      <div id="btnWrapFree" class="cat-btn-wrap active">
+        <button type="button" class="cat-btn" onclick="switchFileTab('free', this)">FREE</button>
       </div>
-      <div class="cat-tab-outer" onclick="switchFileTab('buy', this)">
-        <div class="cat-tab-border">
-          <button type="button" class="cat-btn">BUY</button>
-        </div>
+      <div id="btnWrapBuy" class="cat-btn-wrap">
+        <button type="button" class="cat-btn" onclick="switchFileTab('buy', this)">BUY</button>
       </div>
     </div>
 
-    <!-- Vùng bao quanh các pane để cố định chiều cao, tránh giật layout trang -->
-    <div class="file-pane-wrapper">
+    <!-- Vùng chứa các tab nội dung được cố định khung để chống giật layout -->
+    <div class="file-container-wrapper">
       <!-- Nội dung Tab FREE (Mặc định hiển thị) -->
       <div id="paneFree" class="file-pane active">
         <!-- Tab 3: Free Fire Dylib (Bảo trì) -->
@@ -932,20 +925,22 @@
       tabs.forEach(tab => tab.classList.remove('active'));
     });
 
-    // Chuyển tab danh mục File FREE / BUY đồng bộ kích thước
-    function switchFileTab(type, outerElement) {
-      const parentContainer = outerElement.closest('.container');
+    // Chuyển tab danh mục File FREE / BUY mượt mà không co giãn layout
+    function switchFileTab(type, btnElement) {
+      const parentContainer = btnElement.closest('.container');
       const paneFree = parentContainer.querySelector('#paneFree');
       const paneBuy = parentContainer.querySelector('#paneBuy');
-      const catTabOuters = parentContainer.querySelectorAll('.cat-tab-outer');
-
-      catTabOuters.forEach(tab => tab.classList.remove('active'));
-      outerElement.classList.add('active');
+      const btnWrapFree = parentContainer.querySelector('#btnWrapFree');
+      const btnWrapBuy = parentContainer.querySelector('#btnWrapBuy');
 
       if (type === 'free') {
+        btnWrapFree.classList.add('active');
+        btnWrapBuy.classList.remove('active');
         paneFree.classList.add('active');
         paneBuy.classList.remove('active');
       } else {
+        btnWrapBuy.classList.add('active');
+        btnWrapFree.classList.remove('active');
         paneBuy.classList.add('active');
         paneFree.classList.remove('active');
       }
