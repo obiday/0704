@@ -152,14 +152,12 @@
               <div class="item-meta">
                 <div class="item-title">
                   Free Fire Dylib
-                  <!-- Giữ nguyên chữ .DYLIB như bạn yêu cầu -->
                   <span class="tag">.DYLIB</span>
                 </div>
                 <div class="item-sub">Inject qua TrollFools</div>
               </div>
             </div>
             <div class="actions">
-              <!-- Nút tải đổi thành Đang bảo trì và bị khóa -->
               <button class="btn btn-main" disabled style="background: transparent; border: 1px solid var(--border); color: var(--text-muted); cursor: not-allowed;">
                 Đang bảo trì
               </button>
@@ -168,7 +166,7 @@
         </div>
       </div>
 
-      <!-- Tab 4: AOV TIPA -->
+      <!-- Tab 4: AOV TIPA (Cập nhật bố cục nút) -->
       <div class="tab-wrap-outer" onclick="activateTab(this, event)">
         <div class="tab-border">
           <div class="tab-inner has-video">
@@ -185,24 +183,28 @@
                   <div class="item-sub">Hỗ trợ cài đặt qua TrollStore / Sideload</div>
                 </div>
               </div>
+              
               <div class="actions">
-                <!-- NÚT MỚI: XEM DEMO -->
-                <button class="btn" onclick="toggleVideo(this, event)">
-                  Xem Demo
+                <!-- Nút Xem Demo -->
+                <button class="btn btn-demo" onclick="toggleVideo(this, event)">
+                  <span>Xem Demo</span>
                   <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 </button>
-
-                <button class="btn btn-icon" onclick="copyUrl('https://t.me/x0704cheat/563', this)" title="Sao chép link">
-                  <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                </button>
-                <a href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="btn btn-main">
-                  Tải File
-                  <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                </a>
+                
+                <!-- Nhóm nút Tải & Copy -->
+                <div class="action-right">
+                  <button class="btn btn-icon" onclick="copyUrl('https://t.me/x0704cheat/563', this)" title="Sao chép link">
+                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  </button>
+                  <a href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="btn btn-main">
+                    Tải File
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  </a>
+                </div>
               </div>
             </div>
             
-            <!-- Khung Video (Sẽ bị ẩn lúc đầu) -->
+            <!-- Khung Video (Hoàn toàn ẩn) -->
             <div class="video-container">
               <video src="https://github.com/obiday/0704/raw/refs/heads/main/v1c044g50000dbk7ig7og65ur0u39sb0.mp4" controls preload="metadata"></video>
             </div>
