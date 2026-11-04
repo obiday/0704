@@ -372,10 +372,10 @@
       color: var(--text);
     }
 
-    /* Khu vực cố định chiều cao/kích thước để không bị giật giao diện khi đổi tab */
+    /* Cố định chiều cao tuyệt đối theo chuẩn của Tab FREE (chứa 2 mục) */
     .file-container-wrapper {
       position: relative;
-      min-height: 145px; /* Giữ chỗ cố định cho các tab nội dung */
+      min-height: 172px; 
       margin-bottom: 24px;
     }
 
@@ -391,8 +391,7 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      transform: translateY(4px);
+      transition: opacity 0.2s ease;
     }
 
     .file-pane.active {
@@ -400,7 +399,6 @@
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transform: translateY(0);
     }
 
     /* Khung Tab vát góc mục file */
@@ -788,7 +786,7 @@
       </div>
     </div>
 
-    <!-- Vùng chứa các tab nội dung được cố định khung để chống giật layout -->
+    <!-- Vùng chứa các tab nội dung được cố định chiều cao theo tab FREE -->
     <div class="file-container-wrapper">
       <!-- Nội dung Tab FREE (Mặc định hiển thị) -->
       <div id="paneFree" class="file-pane active">
@@ -925,7 +923,7 @@
       tabs.forEach(tab => tab.classList.remove('active'));
     });
 
-    // Chuyển tab danh mục File FREE / BUY mượt mà không co giãn layout
+    // Chuyển tab danh mục File FREE / BUY chuẩn giữ nguyên kích thước khung theo tab FREE
     function switchFileTab(type, btnElement) {
       const parentContainer = btnElement.closest('.container');
       const paneFree = parentContainer.querySelector('#paneFree');
