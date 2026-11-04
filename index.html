@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>0704 — Portal</title>
   
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <!-- Gọi file CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -96,13 +94,15 @@
               </div>
             </div>
             <div class="actions">
-              <button class="btn btn-icon" onclick="copyUrl('https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470', this)" title="Sao chép link">
-                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              </button>
-              <a href="https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470" target="_blank" rel="noopener" class="btn btn-main">
-                Get Key
-                <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-              </a>
+              <div class="action-right">
+                <button class="btn btn-icon" onclick="copyUrl('https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470', this)" title="Sao chép link">
+                  <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+                <a href="https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470" target="_blank" rel="noopener" class="btn btn-main">
+                  Get Key
+                  <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -125,13 +125,15 @@
               </div>
             </div>
             <div class="actions">
-              <button class="btn btn-icon" onclick="copyUrl('https://t.me/obiday_bot?start=shop', this)" title="Sao chép link">
-                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              </button>
-              <a href="https://t.me/obiday_bot?start=shop" target="_blank" rel="noopener" class="btn btn-main">
-                Mua Key
-                <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-              </a>
+              <div class="action-right">
+                <button class="btn btn-icon" onclick="copyUrl('https://t.me/obiday_bot?start=shop', this)" title="Sao chép link">
+                  <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+                <a href="https://t.me/obiday_bot?start=shop" target="_blank" rel="noopener" class="btn btn-main">
+                  Mua Key
+                  <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -162,9 +164,11 @@
               </div>
             </div>
             <div class="actions">
-              <button class="btn btn-main" disabled style="background: transparent; border: 1px solid var(--border); color: var(--text-muted); cursor: not-allowed;">
-                Đang bảo trì
-              </button>
+              <div class="action-right" style="width: 100%;">
+                <button class="btn btn-main" disabled style="width: 100%; color: var(--text-muted); cursor: not-allowed; background: transparent;">
+                  Đang bảo trì
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -189,13 +193,11 @@
               </div>
               
               <div class="actions">
-                <!-- Nút Xem Demo -->
                 <button class="btn btn-demo" onclick="toggleVideo(this, event)">
                   <span>Xem Demo</span>
                   <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 </button>
                 
-                <!-- Nhóm nút Tải & Copy -->
                 <div class="action-right">
                   <button class="btn btn-icon" onclick="copyUrl('https://t.me/x0704cheat/563', this)" title="Sao chép link">
                     <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -208,7 +210,6 @@
               </div>
             </div>
             
-            <!-- Khung Video -->
             <div class="video-container">
               <video src="https://github.com/obiday/0704/raw/refs/heads/main/v1c044g50000dbk7ig7og65ur0u39sb0.mp4" controls preload="metadata"></video>
             </div>
@@ -220,8 +221,6 @@
   </div>
 
   <div id="toast" class="toast">ĐÃ SAO CHÉP LIÊN KẾT</div>
-  
-  <!-- Gọi file JS -->
   <script src="main.js"></script>
 
 </body>
