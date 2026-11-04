@@ -505,3 +505,52 @@ svg {
     flex: 1;
   }
 }
+
+/* Trạng thái Bảo trì */
+.tab-wrap-outer.maintenance {
+  opacity: 0.4;
+  pointer-events: none;
+  filter: grayscale(100%);
+}
+
+.tag-danger {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.2) !important;
+  color: #ef4444 !important;
+}
+
+/* Khung chứa Video */
+.tab-inner.has-video {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.tab-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.video-container {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #000;
+  display: flex;
+}
+
+.video-container video {
+  width: 100%;
+  display: block;
+}
+
+@media (max-width: 500px) {
+  .tab-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
