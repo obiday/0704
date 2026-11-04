@@ -327,7 +327,86 @@
       margin-bottom: 24px;
     }
 
-    /* Khung Tab vát góc */
+    /* Thanh chọn Tab Phân loại (FREE / BUY) vát góc đứt góc trên dưới */
+    .file-category-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .cat-tab-outer {
+      cursor: pointer;
+      transition: filter 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .cat-tab-outer.active {
+      transform: translateY(-1px);
+    }
+
+    .cat-tab-border {
+      background: var(--border);
+      padding: 1px;
+      clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+      transition: background 0.25s ease;
+    }
+
+    .cat-tab-outer.active .cat-tab-border {
+      background: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.65) 100%);
+    }
+
+    .cat-btn {
+      width: 100%;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 11px;
+      text-align: center;
+      background: var(--surface);
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .cat-tab-outer:hover .cat-btn {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    .cat-tab-outer.active .cat-btn {
+      background: var(--surface-active);
+      color: var(--text);
+    }
+
+    /* Vùng chứa các Pane file để giữ đồng bộ kích thước (tránh giật layout) */
+    .file-pane-wrapper {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    /* Khu vực chứa nội dung danh sách file theo tab */
+    .file-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .file-pane.active {
+      position: relative;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Khung Tab vát góc mục file */
     .tab-wrap-outer {
       transition: filter 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
       cursor: pointer;
@@ -699,75 +778,135 @@
     <!-- Phần 2: Danh sách File -->
     <div class="section-head">
       <span>02. Danh sách bản cài</span>
-      <span>2 FILES</span>
+      <span>FILES</span>
     </div>
 
-    <div class="tab-group">
-      <!-- Tab 3: Free Fire Dylib (Bảo trì) -->
-      <div class="tab-wrap-outer maintenance">
-        <div class="tab-border">
-          <div class="tab-inner">
-            <div class="tab-row">
-              <div class="item-left">
-                <div class="icon-box">
-                  <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                </div>
-                <div class="item-meta">
-                  <div class="item-title">
-                    Free Fire Dylib
-                    <span class="tag">.DYLIB</span>
+    <!-- Thanh chuyển đổi tab FREE / BUY (Kiểu vát đứt góc trên dưới) -->
+    <div class="file-category-tabs">
+      <div class="cat-tab-outer active" onclick="switchFileTab('free', this)">
+        <div class="cat-tab-border">
+          <button type="button" class="cat-btn">FREE</button>
+        </div>
+      </div>
+      <div class="cat-tab-outer" onclick="switchFileTab('buy', this)">
+        <div class="cat-tab-border">
+          <button type="button" class="cat-btn">BUY</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vùng bao quanh các pane để cố định chiều cao, tránh giật layout trang -->
+    <div class="file-pane-wrapper">
+      <!-- Nội dung Tab FREE (Mặc định hiển thị) -->
+      <div id="paneFree" class="file-pane active">
+        <!-- Tab 3: Free Fire Dylib (Bảo trì) -->
+        <div class="tab-wrap-outer maintenance">
+          <div class="tab-border">
+            <div class="tab-inner">
+              <div class="tab-row">
+                <div class="item-left">
+                  <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                   </div>
-                  <div class="item-sub">Inject qua TrollFools</div>
+                  <div class="item-meta">
+                    <div class="item-title">
+                      Free Fire Dylib
+                      <span class="tag">.DYLIB</span>
+                    </div>
+                    <div class="item-sub">Inject qua TrollFools</div>
+                  </div>
                 </div>
-              </div>
-              <div class="actions">
-                <button type="button" class="btn btn-main" disabled>
-                  Đang bảo trì
-                </button>
+                <div class="actions">
+                  <button type="button" class="btn btn-main" disabled>
+                    Đang bảo trì
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Tab 4: AOV 0704 -->
-      <div class="tab-wrap-outer" onclick="activateTab(this, event)">
-        <div class="tab-border">
-          <div class="tab-inner">
-            <div class="tab-row">
-              <div class="item-left">
-                <div class="icon-box">
-                  <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                </div>
-                <div class="item-meta">
-                  <div class="item-title">
-                    AOV 0704
-                    <span class="tag">.TIPA</span>
+        <!-- Tab 4: AOV 0704 -->
+        <div class="tab-wrap-outer" onclick="activateTab(this, event)">
+          <div class="tab-border">
+            <div class="tab-inner">
+              <div class="tab-row">
+                <div class="item-left">
+                  <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                   </div>
-                  <div class="item-sub">Hỗ trợ cài đặt qua TrollStore / Sideload</div>
+                  <div class="item-meta">
+                    <div class="item-title">
+                      AOV 0704
+                      <span class="tag">.TIPA</span>
+                    </div>
+                    <div class="item-sub">Hỗ trợ cài đặt qua TrollStore / Sideload</div>
+                  </div>
+                </div>
+                
+                <div class="actions">
+                  <button type="button" class="btn btn-demo" onclick="toggleVideo(this, event)">
+                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    <span>Xem Demo</span>
+                  </button>
+                  <a href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="btn btn-main">
+                    Tải File
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  </a>
                 </div>
               </div>
               
-              <div class="actions">
-                <button type="button" class="btn btn-demo" onclick="toggleVideo(this, event)">
-                  <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                  <span>Xem Demo</span>
-                </button>
-                <a href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="btn btn-main">
-                  Tải File
-                  <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                </a>
+              <!-- Khung phát Video Demo -->
+              <div class="video-container">
+                <video src="https://github.com/obiday/0704/raw/refs/heads/main/v1c044g50000dbk7ig7og65ur0u39sb0.mp4" controls playsinline preload="metadata"></video>
               </div>
             </div>
-            
-            <!-- Khung phát Video Demo -->
-            <div class="video-container">
-              <video src="https://github.com/obiday/0704/raw/refs/heads/main/v1c044g50000dbk7ig7og65ur0u39sb0.mp4" controls playsinline preload="metadata"></video>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nội dung Tab BUY -->
+      <div id="paneBuy" class="file-pane">
+        <!-- Tab 5: HUNTER (.IPA) -->
+        <div class="tab-wrap-outer" onclick="activateTab(this, event)">
+          <div class="tab-border">
+            <div class="tab-inner">
+              <div class="tab-row">
+                <div class="item-left">
+                  <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  </div>
+                  <div class="item-meta">
+                    <div class="item-title">
+                      HUNTER
+                      <span class="tag">.IPA</span>
+                    </div>
+                    <div class="item-sub">Phiên bản VIP cao cấp</div>
+                  </div>
+                </div>
+                
+                <div class="actions">
+                  <button type="button" class="btn btn-demo" onclick="toggleVideo(this, event)">
+                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    <span>Xem Demo</span>
+                  </button>
+                  <a href="https://t.me/obiday_bot" target="_blank" rel="noopener" class="btn btn-main">
+                    Mua Ngay
+                    <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                  </a>
+                </div>
+              </div>
+              
+              <!-- Khung phát Video Demo (Link tạm https://abc.xyz) -->
+              <div class="video-container">
+                <video src="https://abc.xyz" controls playsinline preload="metadata"></video>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 
   <script>
@@ -792,6 +931,25 @@
     document.addEventListener('click', () => {
       tabs.forEach(tab => tab.classList.remove('active'));
     });
+
+    // Chuyển tab danh mục File FREE / BUY đồng bộ kích thước
+    function switchFileTab(type, outerElement) {
+      const parentContainer = outerElement.closest('.container');
+      const paneFree = parentContainer.querySelector('#paneFree');
+      const paneBuy = parentContainer.querySelector('#paneBuy');
+      const catTabOuters = parentContainer.querySelectorAll('.cat-tab-outer');
+
+      catTabOuters.forEach(tab => tab.classList.remove('active'));
+      outerElement.classList.add('active');
+
+      if (type === 'free') {
+        paneFree.classList.add('active');
+        paneBuy.classList.remove('active');
+      } else {
+        paneBuy.classList.add('active');
+        paneFree.classList.remove('active');
+      }
+    }
 
     function toggleVideo(btnElement, event) {
       event.stopPropagation();
