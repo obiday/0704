@@ -2,18 +2,631 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="color-scheme" content="dark">
   <title>0704 — Portal</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --bg: #030305;
+      --surface: #0d0d12;
+      --surface-hover: #14141c;
+      --surface-active: #181822;
+      --border: rgba(255, 255, 255, 0.14);
+      --border-bright: rgba(255, 255, 255, 0.38);
+      --text: #ffffff;
+      --text-muted: #8a8a9e;
+      --radius: 6px;
+      --cut: 13px;
+      --cut-sm: 7px;
+    }
+
+    /* Reset & chống chớp màu xanh mặc định trên trình duyệt */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a, a:link, a:visited, a:hover, a:active, button {
+      color: inherit;
+      text-decoration: none;
+      outline: none;
+    }
+
+    body {
+      background-image: 
+        radial-gradient(circle at 50% -10%, rgba(255, 255, 255, 0.09) 0%, transparent 55%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 100% 100%, 28px 28px, 28px 28px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 14px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 14px 16px;
+      background: rgba(12, 12, 16, 0.75);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      background: var(--text);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.18);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .brand-text h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      line-height: 1.2;
+    }
+
+    .brand-text span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .status-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 6px 11px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.85); }
+    }
+
+    /* Modal Thông Báo */
+    .alert-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 4, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .alert-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .alert-box {
+      width: 100%;
+      max-width: 420px;
+      transform: translateY(0) scale(1);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.85));
+    }
+
+    .alert-overlay.hidden .alert-box {
+      transform: translateY(16px) scale(0.96);
+    }
+
+    .alert-border {
+      background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.55) 100%);
+      padding: 1px;
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+    }
+
+    .alert-inner {
+      background: #0c0c10;
+      padding: 24px 20px;
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+    }
+
+    .alert-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alert-title svg {
+      width: 18px;
+      height: 18px;
+      color: var(--text);
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.35));
+    }
+
+    .alert-text {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #a1a1b5;
+      margin-bottom: 20px;
+    }
+
+    .alert-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    /* Nút trong bảng thông báo: Vát góc đồng bộ & giữ nguyên viền */
+    .alert-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 12px 16px;
+      color: var(--text) !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+      isolation: isolate;
+      background: rgba(255, 255, 255, 0.22);
+      clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+      transition: all 0.2s ease;
+    }
+
+    .alert-btn::before {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      background: #14141b;
+      z-index: -1;
+      clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+      transition: background 0.2s ease;
+    }
+
+    .alert-btn .btn-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .alert-btn:hover {
+      background: var(--text);
+      color: var(--bg) !important;
+    }
+
+    .alert-btn:hover::before {
+      background: var(--text);
+    }
+
+    .alert-btn svg {
+      transition: transform 0.2s ease;
+    }
+
+    .alert-btn:hover svg {
+      transform: translateX(3px);
+      color: var(--bg);
+    }
+
+    .alert-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-close-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 0;
+      transition: color 0.2s ease;
+    }
+
+    .btn-close-text:hover {
+      color: var(--text);
+    }
+
+    /* Tiêu đề từng phần */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 0 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .tab-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    /* Khung Tab vát góc */
+    .tab-wrap-outer {
+      transition: filter 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+    }
+
+    .tab-wrap-outer.active {
+      transform: translateY(-2px);
+      filter: drop-shadow(0 10px 20px rgba(255, 255, 255, 0.06));
+      z-index: 2;
+    }
+
+    .tab-border {
+      background: var(--border);
+      padding: 1px;
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      transition: background 0.25s ease;
+    }
+
+    .tab-wrap-outer.active .tab-border {
+      background: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.65) 100%);
+    }
+
+    .tab-inner {
+      background: var(--surface);
+      padding: 15px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      transition: background 0.25s ease;
+    }
+
+    .tab-wrap-outer:hover .tab-inner {
+      background: var(--surface-hover);
+    }
+
+    .tab-wrap-outer.active .tab-inner {
+      background: var(--surface-active);
+    }
+
+    /* Hàng trên của mỗi Tab: Chứa chữ bên trái & nút bên phải */
+    .tab-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .icon-box {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--text-muted);
+      transition: all 0.25s ease;
+    }
+
+    .tab-wrap-outer.active .icon-box {
+      border-color: rgba(255, 255, 255, 0.35);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .item-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .item-title {
+      font-size: 14.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 500;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #b8b8c8;
+    }
+
+    .item-sub {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* =============================================
+       HỆ THỐNG NÚT BẤM VÁT GÓC (VIỀN LIỀN MẠCH 100%)
+    ============================================= */
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .action-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 12.5px;
+      font-weight: 500;
+      height: 36px;
+      padding: 0 14px;
+      color: var(--text) !important;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      user-select: none;
+      white-space: nowrap;
+      position: relative;
+      z-index: 1;
+      isolation: isolate;
+      background: rgba(255, 255, 255, 0.24);
+      clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+      transition: all 0.2s ease;
+    }
+
+    /* Lớp nền bên trong dùng chung thông số cắt góc để giữ viền chéo dày 1.2px */
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      background: #171720;
+      z-index: -1;
+      clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+      transition: background 0.2s ease;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.48);
+    }
+
+    .btn:hover::before {
+      background: #22222e;
+    }
+
+    /* Nút Icon Sao chép cũng vát góc đồng bộ */
+    .btn-icon {
+      width: 36px;
+      padding: 0;
+      color: var(--text-muted) !important;
+    }
+
+    .btn-icon:hover {
+      color: var(--text) !important;
+    }
+
+    /* Khi Tab được chọn: Nút chính sáng trắng nổi bật */
+    .tab-wrap-outer.active .btn-main {
+      background: var(--text);
+      color: var(--bg) !important;
+      font-weight: 600;
+    }
+
+    .tab-wrap-outer.active .btn-main::before {
+      background: var(--text);
+    }
+
+    /* Trạng thái Bảo trì */
+    .tab-wrap-outer.maintenance {
+      opacity: 0.45;
+      pointer-events: none;
+      filter: grayscale(100%);
+    }
+
+    .btn:disabled {
+      background: rgba(255, 255, 255, 0.14) !important;
+      color: var(--text-muted) !important;
+      cursor: not-allowed;
+    }
+
+    .btn:disabled::before {
+      background: #121218 !important;
+    }
+
+    /* Khung Video Demo */
+    .video-container {
+      width: 100%;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: #000;
+      display: none;
+    }
+
+    .video-container.show {
+      display: block;
+    }
+
+    .video-container video {
+      width: 100%;
+      max-height: 280px;
+      display: block;
+    }
+
+    /* Toast thông báo Copy */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--text);
+      color: var(--bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 11px 18px;
+      clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* Giao diện Điện thoại: Gọn gàng, nút sát với chữ */
+    @media (max-width: 480px) {
+      .tab-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px; /* Khoảng cách vừa khít giữa chữ và nút */
+      }
+
+      .actions {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+      }
+
+      .btn-demo {
+        flex: 1;
+      }
+
+      .action-right {
+        flex: 1;
+        display: flex;
+        gap: 8px;
+      }
+
+      .action-right .btn-main {
+        flex: 1;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Modal Overlay -->
+  <!-- Bảng Thông Báo Hệ Thống -->
   <div id="alertOverlay" class="alert-overlay">
     <div class="alert-box">
       <div class="alert-border">
@@ -31,20 +644,20 @@
                 <svg viewBox="0 0 24 24"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                 Channel 1 (Main)
               </div>
-              <svg viewBox="0 0 24 24" style="width:14px; height:14px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </a>
             <a href="https://t.me/x0704cheat" target="_blank" rel="noopener" class="alert-btn">
               <div class="btn-left">
                 <svg viewBox="0 0 24 24"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                 Channel 2 (File)
               </div>
-              <svg viewBox="0 0 24 24" style="width:14px; height:14px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </a>
           </div>
           <div class="alert-footer">
-            <button class="btn-close-text" onclick="closeAlert()">
-              Đóng thông báo 
-              <svg viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            <button type="button" class="btn-close-text" onclick="closeAlert()">
+              Đóng thông báo
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </button>
           </div>
         </div>
@@ -81,27 +694,29 @@
       <div class="tab-wrap-outer" onclick="activateTab(this, event)">
         <div class="tab-border">
           <div class="tab-inner">
-            <div class="item-left">
-              <div class="icon-box">
-                <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
-              </div>
-              <div class="item-meta">
-                <div class="item-title">
-                  Get Key
-                  <span class="tag">FREE KEY</span>
+            <div class="tab-row">
+              <div class="item-left">
+                <div class="icon-box">
+                  <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
                 </div>
-                <div class="item-sub">Vượt link lấy mã kích hoạt miễn phí</div>
+                <div class="item-meta">
+                  <div class="item-title">
+                    Get Key
+                    <span class="tag">FREE KEY</span>
+                  </div>
+                  <div class="item-sub">Vượt link lấy mã kích hoạt miễn phí</div>
+                </div>
               </div>
-            </div>
-            <div class="actions">
-              <div class="action-right">
-                <button class="btn btn-icon" onclick="copyUrl('https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470', this)" title="Sao chép link">
-                  <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                </button>
-                <a href="https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470" target="_blank" rel="noopener" class="btn btn-main">
-                  Get Key
-                  <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </a>
+              <div class="actions">
+                <div class="action-right">
+                  <button type="button" class="btn btn-icon" onclick="copyUrl('https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470', this, event)" title="Sao chép link">
+                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  </button>
+                  <a href="https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470" target="_blank" rel="noopener" class="btn btn-main">
+                    Get Key
+                    <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -112,27 +727,29 @@
       <div class="tab-wrap-outer" onclick="activateTab(this, event)">
         <div class="tab-border">
           <div class="tab-inner">
-            <div class="item-left">
-              <div class="icon-box">
-                <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-              </div>
-              <div class="item-meta">
-                <div class="item-title">
-                  Mua Key VIP
-                  <span class="tag">@obiday_bot</span>
+            <div class="tab-row">
+              <div class="item-left">
+                <div class="icon-box">
+                  <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                 </div>
-                <div class="item-sub">Mua key tự động 24/7 qua Bot Telegram</div>
+                <div class="item-meta">
+                  <div class="item-title">
+                    Mua Key VIP
+                    <span class="tag">@obiday_bot</span>
+                  </div>
+                  <div class="item-sub">Mua key tự động 24/7 qua Bot Telegram</div>
+                </div>
               </div>
-            </div>
-            <div class="actions">
-              <div class="action-right">
-                <button class="btn btn-icon" onclick="copyUrl('https://t.me/obiday_bot?start=shop', this)" title="Sao chép link">
-                  <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                </button>
-                <a href="https://t.me/obiday_bot?start=shop" target="_blank" rel="noopener" class="btn btn-main">
-                  Mua Key
-                  <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </a>
+              <div class="actions">
+                <div class="action-right">
+                  <button type="button" class="btn btn-icon" onclick="copyUrl('https://t.me/obiday_bot?start=shop', this, event)" title="Sao chép link">
+                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  </button>
+                  <a href="https://t.me/obiday_bot?start=shop" target="_blank" rel="noopener" class="btn btn-main">
+                    Mua Key
+                    <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -147,38 +764,40 @@
     </div>
 
     <div class="tab-group">
-      <!-- Tab 3: Free Fire Dylib -->
-      <div class="tab-wrap-outer maintenance" onclick="activateTab(this, event)">
+      <!-- Tab 3: Free Fire Dylib (Bảo trì) -->
+      <div class="tab-wrap-outer maintenance">
         <div class="tab-border">
           <div class="tab-inner">
-            <div class="item-left">
-              <div class="icon-box">
-                <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-              </div>
-              <div class="item-meta">
-                <div class="item-title">
-                  Free Fire Dylib
-                  <span class="tag">.DYLIB</span>
+            <div class="tab-row">
+              <div class="item-left">
+                <div class="icon-box">
+                  <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                 </div>
-                <div class="item-sub">Inject qua TrollFools</div>
+                <div class="item-meta">
+                  <div class="item-title">
+                    Free Fire Dylib
+                    <span class="tag">.DYLIB</span>
+                  </div>
+                  <div class="item-sub">Inject qua TrollFools</div>
+                </div>
               </div>
-            </div>
-            <div class="actions">
-              <div class="action-right" style="width: 100%;">
-                <button class="btn btn-main" disabled style="width: 100%; color: var(--text-muted); cursor: not-allowed; background: transparent;">
-                  Đang bảo trì
-                </button>
+              <div class="actions">
+                <div class="action-right">
+                  <button type="button" class="btn btn-main" disabled>
+                    Đang bảo trì
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Tab 4: AOV TIPA -->
+      <!-- Tab 4: AOV TIPA (Có Video Demo) -->
       <div class="tab-wrap-outer" onclick="activateTab(this, event)">
         <div class="tab-border">
-          <div class="tab-inner has-video">
-            <div class="tab-top">
+          <div class="tab-inner">
+            <div class="tab-row">
               <div class="item-left">
                 <div class="icon-box">
                   <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
@@ -193,13 +812,13 @@
               </div>
               
               <div class="actions">
-                <button class="btn btn-demo" onclick="toggleVideo(this, event)">
+                <button type="button" class="btn btn-demo" onclick="toggleVideo(this, event)">
                   <span>Xem Demo</span>
                   <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 </button>
                 
                 <div class="action-right">
-                  <button class="btn btn-icon" onclick="copyUrl('https://t.me/x0704cheat/563', this)" title="Sao chép link">
+                  <button type="button" class="btn btn-icon" onclick="copyUrl('https://t.me/x0704cheat/563', this, event)" title="Sao chép link">
                     <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                   </button>
                   <a href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="btn btn-main">
@@ -210,18 +829,80 @@
               </div>
             </div>
             
+            <!-- Khung Video (Chỉ hiện khi bấm Xem Demo) -->
             <div class="video-container">
-              <video src="https://github.com/obiday/0704/raw/refs/heads/main/v1c044g50000dbk7ig7og65ur0u39sb0.mp4" controls preload="metadata"></video>
+              <video src="https://github.com/obiday/0704/raw/refs/heads/main/v1c044g50000dbk7ig7og65ur0u39sb0.mp4" controls playsinline preload="metadata"></video>
             </div>
-            
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Thông báo Copy -->
   <div id="toast" class="toast">ĐÃ SAO CHÉP LIÊN KẾT</div>
-  <script src="main.js"></script>
+
+  <!-- Toàn bộ JavaScript gộp chung -->
+  <script>
+    const tabs = document.querySelectorAll('.tab-wrap-outer:not(.maintenance)');
+    const alertOverlay = document.getElementById('alertOverlay');
+
+    function closeAlert() {
+      alertOverlay.classList.add('hidden');
+      setTimeout(() => {
+        alertOverlay.style.display = 'none';
+      }, 300);
+    }
+
+    function activateTab(selectedTab, event) {
+      event.stopPropagation();
+      tabs.forEach(tab => {
+        if (tab !== selectedTab) tab.classList.remove('active');
+      });
+      selectedTab.classList.add('active');
+    }
+
+    document.addEventListener('click', () => {
+      tabs.forEach(tab => tab.classList.remove('active'));
+    });
+
+    function copyUrl(url, btnElement, event) {
+      if (event) event.stopPropagation();
+      const parentTab = btnElement.closest('.tab-wrap-outer');
+      if (parentTab) {
+        tabs.forEach(tab => tab.classList.remove('active'));
+        parentTab.classList.add('active');
+      }
+
+      navigator.clipboard.writeText(url).then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+      });
+    }
+
+    function toggleVideo(btnElement, event) {
+      event.stopPropagation();
+      const tabInner = btnElement.closest('.tab-inner');
+      const videoContainer = tabInner.querySelector('.video-container');
+      const video = videoContainer.querySelector('video');
+      const btnText = btnElement.querySelector('span');
+
+      if (videoContainer.classList.contains('show')) {
+        videoContainer.classList.remove('show');
+        video.pause();
+        if (btnText) btnText.innerText = 'Xem Demo';
+      } else {
+        const parentTab = btnElement.closest('.tab-wrap-outer');
+        if (parentTab) {
+          tabs.forEach(tab => tab.classList.remove('active'));
+          parentTab.classList.add('active');
+        }
+        videoContainer.classList.add('show');
+        if (btnText) btnText.innerText = 'Đóng Demo';
+      }
+    }
+  </script>
 
 </body>
 </html>
