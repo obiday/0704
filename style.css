@@ -11,11 +11,12 @@
   --cut-sm: 8px;
 }
 
+/* Fix dứt điểm lỗi nháy màu xanh khi bấm trên điện thoại */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 body {
@@ -118,7 +119,7 @@ body {
   box-shadow: 0 0 10px #10b981;
 }
 
-/* Modal Overlay */
+/* Modal Overlay - Fix lỗi chớp/nháy khi reload */
 .alert-overlay {
   position: fixed;
   inset: 0;
@@ -132,20 +133,19 @@ body {
   z-index: 999;
   opacity: 1;
   visibility: visible;
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 .alert-overlay.hidden {
   opacity: 0;
   visibility: hidden;
-  backdrop-filter: blur(0px);
 }
 
 .alert-box {
   width: 100%;
   max-width: 440px;
   transform: translateY(0) scale(1);
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
 }
 
@@ -220,7 +220,7 @@ body {
   padding: 12px 16px;
   background: rgba(255, 255, 255, 0.03);
   color: var(--text);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px dashed rgba(255, 255, 255, 0.3);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -241,13 +241,13 @@ body {
   border-color: var(--text);
 }
 
+.alert-btn svg {
+  transition: transform 0.2s ease;
+}
+
 .alert-btn:hover svg {
   color: var(--bg);
   transform: translateX(4px);
-}
-
-.alert-btn svg {
-  transition: transform 0.2s ease;
 }
 
 .alert-footer {
@@ -269,18 +269,9 @@ body {
   padding: 4px 0;
   transition: color 0.2s ease;
 }
-
-.btn-close-text:hover {
-  color: var(--text);
-}
-
-.btn-close-text svg {
-  transition: transform 0.2s ease;
-}
-
-.btn-close-text:hover svg {
-  transform: translateX(4px);
-}
+.btn-close-text:hover { color: var(--text); }
+.btn-close-text svg { transition: transform 0.2s ease; }
+.btn-close-text:hover svg { transform: translateX(4px); }
 
 /* Section Header */
 .section-head {
@@ -303,7 +294,6 @@ body {
   margin-bottom: 28px;
 }
 
-/* Tab vát góc */
 .tab-wrap-outer {
   transition: filter 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: pointer;
@@ -337,14 +327,8 @@ body {
   clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
   transition: background 0.3s ease;
 }
-
-.tab-wrap-outer:hover .tab-inner {
-  background: var(--surface-hover);
-}
-
-.tab-wrap-outer.active .tab-inner {
-  background: rgba(20, 20, 25, 0.98);
-}
+.tab-wrap-outer:hover .tab-inner { background: var(--surface-hover); }
+.tab-wrap-outer.active .tab-inner { background: rgba(20, 20, 25, 0.98); }
 
 .item-left {
   display: flex;
@@ -372,64 +356,58 @@ body {
   background: rgba(255, 255, 255, 0.08);
 }
 
-.item-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
+.item-meta { display: flex; flex-direction: column; gap: 5px; }
+.item-title { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #b0b0b8; }
+.item-sub { font-size: 13px; color: var(--text-muted); }
 
-.item-title {
-  font-size: 15px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 500;
-  padding: 3px 8px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #b0b0b8;
-}
-
-.item-sub {
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-/* Nút bấm chung */
+/* =======================================
+   ĐỊNH DẠNG NÚT BẤM (NÉT ĐỨT CHÉO MỚI)
+======================================== */
 .btn {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 500;
   padding: 9px 16px;
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.05);
   color: var(--text);
-  border: 1px solid var(--border);
   text-decoration: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+  user-select: none;
+  
+  /* Hiệu ứng viền nét đứt và sọc chéo chìm */
+  border: 1px dashed rgba(255, 255, 255, 0.4);
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.02) 4px,
+    rgba(255, 255, 255, 0.06) 4px,
+    rgba(255, 255, 255, 0.06) 8px
+  );
 }
 
 .btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.6);
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.05) 4px,
+    rgba(255, 255, 255, 0.09) 4px,
+    rgba(255, 255, 255, 0.09) 8px
+  );
 }
 
+/* Nút chính (Tải file, Get Key, Mua Key) khi active */
 .tab-wrap-outer.active .btn-main {
   background: var(--text);
   color: var(--bg);
-  border-color: var(--text);
+  /* Viền đứt nét màu đen ngược lại cực ngầu */
+  border: 1px dashed var(--bg);
   font-weight: 600;
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
 }
@@ -438,16 +416,10 @@ body {
   background: #e0e0e0;
 }
 
-.btn-icon {
-  padding: 9px 10px;
-  color: var(--text-muted);
-}
+.btn-icon { padding: 9px 10px; color: var(--text-muted); }
+.btn-icon:hover { color: var(--text); }
 
-.btn-icon:hover {
-  color: var(--text);
-}
-
-/* Toast thông báo */
+/* Toast */
 .toast {
   position: fixed;
   bottom: 32px;
@@ -463,14 +435,10 @@ body {
   opacity: 0;
   transform: translateY(15px);
   pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 10;
 }
-
-.toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+.toast.show { opacity: 1; transform: translateY(0); }
 
 svg {
   width: 16px;
@@ -482,28 +450,11 @@ svg {
   stroke-linejoin: round;
 }
 
-/* Định dạng Layout Video Demo */
-.tab-inner.has-video {
-  flex-direction: column;
-  align-items: stretch;
-  gap: 16px;
-}
+/* Layout chung */
+.tab-inner.has-video { flex-direction: column; align-items: stretch; gap: 16px; }
+.tab-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.tab-wrap-outer.maintenance { opacity: 0.4; pointer-events: none; filter: grayscale(100%); }
 
-.tab-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-/* Trạng thái Bảo trì */
-.tab-wrap-outer.maintenance {
-  opacity: 0.4;
-  pointer-events: none;
-  filter: grayscale(100%);
-}
-
-/* Ẩn video hoàn toàn khi chưa bấm */
 .video-container {
   width: 100%;
   border-radius: 6px;
@@ -513,18 +464,10 @@ svg {
   display: none; 
   margin-top: 12px;
 }
+.video-container.show { display: flex; }
+.video-container video { width: 100%; display: block; }
 
-/* Chỉ hiện khi thêm class show */
-.video-container.show {
-  display: flex;
-}
-
-.video-container video {
-  width: 100%;
-  display: block;
-}
-
-/* Sắp xếp cụm nút nằm ngang */
+/* Bố cục nút bấm mới gọn gàng hơn */
 .actions {
   display: flex;
   align-items: center;
@@ -537,41 +480,34 @@ svg {
   gap: 8px;
 }
 
-/* Tối ưu riêng giao diện cho điện thoại */
+/* =========================================
+   TỐI ƯU CỰC CHUẨN CHO ĐIỆN THOẠI
+========================================== */
 @media (max-width: 500px) {
-  /* Ép tất cả các Tab phải tự động xuống dòng khi màn hình nhỏ */
   .tab-inner, .tab-top {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
   }
   
-  .item-left {
-    width: 100%;
-  }
+  .item-left { width: 100%; }
   
   .actions {
     width: 100%;
     margin-top: 12px;
-    flex-wrap: wrap; /* Tự động bẻ dòng các nút */
+    flex-wrap: wrap; 
     gap: 10px;
   }
   
-  /* Cấu hình nút Xem Demo tràn viền ngang */
-  .btn-demo {
-    width: 100%;
-    justify-content: center;
-  }
+  .btn-demo { width: 100%; justify-content: center; }
   
-  /* Cấu hình 2 nút Tải & Copy */
   .action-right {
     width: 100%;
     display: flex;
     gap: 8px;
   }
   
-  /* Kéo giãn nút chính lấp đầy khoảng trống */
   .actions .btn-main, .action-right .btn-main {
-    flex: 1;
+    flex: 1; /* Nút Tải giãn hết mức, lấp kín hoàn hảo */
   }
 }
