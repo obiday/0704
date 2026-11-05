@@ -150,7 +150,7 @@
       50% { opacity: 0.45; transform: scale(0.85); }
     }
 
-    /* Modal Thông Báo */
+    /* Modal Thông Báo & Modal Xem Thêm (Dùng chung phong cách vát 2 góc chéo) */
     .alert-overlay {
       position: fixed;
       inset: 0;
@@ -306,6 +306,14 @@
       color: var(--text);
     }
 
+    .btn-close-text svg {
+      transition: transform 0.2s ease;
+    }
+
+    .btn-close-text:hover svg {
+      transform: translateX(3px);
+    }
+
     /* Tiêu đề từng phần */
     .section-head {
       display: flex;
@@ -327,7 +335,7 @@
       margin-bottom: 24px;
     }
 
-    /* Thanh chọn Tab Phân loại (FREE / BUY) chuẩn vát góc đứt góc trên dưới */
+    /* Thanh chọn Tab Phân loại (FREE / BUY) */
     .file-category-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -372,14 +380,13 @@
       color: var(--text);
     }
 
-    /* Cố định chiều cao tuyệt đối theo chuẩn của Tab FREE (chứa 2 mục) */
+    /* Cố định chiều cao theo chuẩn của Tab FREE */
     .file-container-wrapper {
       position: relative;
       min-height: 172px; 
       margin-bottom: 24px;
     }
 
-    /* Khu vực chứa nội dung danh sách file theo tab */
     .file-pane {
       position: absolute;
       top: 0;
@@ -649,7 +656,7 @@
 </head>
 <body>
 
-  <!-- Bảng Thông Báo Hệ Thống -->
+  <!-- 1. Bảng Thông Báo Hệ Thống Lúc Vào Web -->
   <div id="alertOverlay" class="alert-overlay">
     <div class="alert-box">
       <div class="alert-border">
@@ -688,6 +695,47 @@
     </div>
   </div>
 
+  <!-- 2. Bảng Xem Thêm (Cho các mục Tab FREE: Lấy Key Free & Tải File) -->
+  <div id="freeModalOverlay" class="alert-overlay hidden" style="display: none;" onclick="closeFreeModal()">
+    <div class="alert-box" onclick="event.stopPropagation()">
+      <div class="alert-border">
+        <div class="alert-inner">
+          <div class="alert-title">
+            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            <span id="freeModalTitle">TÙY CHỌN BẢN CÀI</span>
+          </div>
+          <div class="alert-text">
+            Vui lòng lấy mã kích hoạt miễn phí trước khi sử dụng hoặc tải trực tiếp file cài đặt bên dưới.
+          </div>
+          <div class="alert-actions">
+            <!-- Nút trên: Lấy Key Free -->
+            <a id="freeModalKeyBtn" href="https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470" target="_blank" rel="noopener" class="alert-btn">
+              <div class="btn-left">
+                <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                Lấy Key Free
+              </div>
+              <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+            <!-- Nút dưới: Tải File -->
+            <a id="freeModalDownloadBtn" href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="alert-btn">
+              <div class="btn-left">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Tải File
+              </div>
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+          <div class="alert-footer">
+            <button type="button" class="btn-close-text" onclick="closeFreeModal()">
+              Đóng bảng
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <!-- Header -->
     <header class="header">
@@ -706,42 +754,14 @@
       </div>
     </header>
 
-    <!-- Phần 1: Hệ thống Key -->
+    <!-- Phần 1: Hệ thống Key (Đã bỏ Get Key, chỉ giữ lại Mua Key VIP) -->
     <div class="section-head">
       <span>01. Hệ thống Key</span>
       <span>XÁC THỰC</span>
     </div>
 
     <div class="tab-group">
-      <!-- Tab 1: Get Key -->
-      <div class="tab-wrap-outer" onclick="activateTab(this, event)">
-        <div class="tab-border">
-          <div class="tab-inner">
-            <div class="tab-row">
-              <div class="item-left">
-                <div class="icon-box">
-                  <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
-                </div>
-                <div class="item-meta">
-                  <div class="item-title">
-                    Get Key
-                    <span class="tag">FREE KEY</span>
-                  </div>
-                  <div class="item-sub">Vượt link lấy mã kích hoạt miễn phí</div>
-                </div>
-              </div>
-              <div class="actions">
-                <a href="https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470" target="_blank" rel="noopener" class="btn btn-main">
-                  Get Key
-                  <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 2: Mua Key -->
+      <!-- Mua Key VIP -->
       <div class="tab-wrap-outer" onclick="activateTab(this, event)">
         <div class="tab-border">
           <div class="tab-inner">
@@ -776,7 +796,7 @@
       <span>FILES</span>
     </div>
 
-    <!-- Thanh chuyển đổi tab FREE / BUY (Phong cách đứt góc trên dưới) -->
+    <!-- Thanh chuyển đổi tab FREE / BUY -->
     <div class="file-category-tabs">
       <div id="btnWrapFree" class="cat-btn-wrap active">
         <button type="button" class="cat-btn" onclick="switchFileTab('free', this)">FREE</button>
@@ -786,11 +806,11 @@
       </div>
     </div>
 
-    <!-- Vùng chứa các tab nội dung được cố định chiều cao theo tab FREE -->
+    <!-- Vùng chứa các tab nội dung -->
     <div class="file-container-wrapper">
-      <!-- Nội dung Tab FREE (Mặc định hiển thị) -->
+      <!-- Nội dung Tab FREE -->
       <div id="paneFree" class="file-pane active">
-        <!-- Tab 3: Free Fire Dylib (Bảo trì) -->
+        <!-- Mục 1: Free Fire Dylib (Đang bảo trì, nếu mở bảo trì cũng dùng nút Xem Thêm) -->
         <div class="tab-wrap-outer maintenance">
           <div class="tab-border">
             <div class="tab-inner">
@@ -817,7 +837,7 @@
           </div>
         </div>
 
-        <!-- Tab 4: AOV 0704 -->
+        <!-- Mục 2: AOV 0704 (Nút Tải File đã đổi thành Xem Thêm) -->
         <div class="tab-wrap-outer" onclick="activateTab(this, event)">
           <div class="tab-border">
             <div class="tab-inner">
@@ -840,10 +860,10 @@
                     <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     <span>Xem Demo</span>
                   </button>
-                  <a href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="btn btn-main">
-                    Tải File
-                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                  </a>
+                  <button type="button" class="btn btn-main" onclick="openFreeModal('AOV 0704 — .TIPA', 'https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470', 'https://t.me/x0704cheat/563', this, event)">
+                    Xem Thêm
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                  </button>
                 </div>
               </div>
               
@@ -888,7 +908,7 @@
                 </div>
               </div>
               
-              <!-- Khung phát Video Demo (Link tạm https://abc.xyz) -->
+              <!-- Khung phát Video Demo -->
               <div class="video-container">
                 <video src="https://github.com/obiday/0704/raw/refs/heads/main/-3595283433764847805.mp4" controls playsinline preload="metadata"></video>
               </div>
@@ -903,11 +923,41 @@
   <script>
     const tabs = document.querySelectorAll('.tab-wrap-outer:not(.maintenance)');
     const alertOverlay = document.getElementById('alertOverlay');
+    const freeModalOverlay = document.getElementById('freeModalOverlay');
 
+    // Đóng thông báo hệ thống mở đầu
     function closeAlert() {
       alertOverlay.classList.add('hidden');
       setTimeout(() => {
         alertOverlay.style.display = 'none';
+      }, 300);
+    }
+
+    // Mở bảng Xem Thêm cho các mục FREE
+    function openFreeModal(title, keyUrl, downloadUrl, btnElement, event) {
+      if (event) event.stopPropagation();
+      
+      const parentTab = btnElement.closest('.tab-wrap-outer');
+      if (parentTab) {
+        tabs.forEach(tab => tab.classList.remove('active'));
+        parentTab.classList.add('active');
+      }
+
+      document.getElementById('freeModalTitle').innerText = title;
+      document.getElementById('freeModalKeyBtn').href = keyUrl;
+      document.getElementById('freeModalDownloadBtn').href = downloadUrl;
+
+      freeModalOverlay.style.display = 'flex';
+      requestAnimationFrame(() => {
+        freeModalOverlay.classList.remove('hidden');
+      });
+    }
+
+    // Đóng bảng Xem Thêm
+    function closeFreeModal() {
+      freeModalOverlay.classList.add('hidden');
+      setTimeout(() => {
+        freeModalOverlay.style.display = 'none';
       }, 300);
     }
 
@@ -923,7 +973,7 @@
       tabs.forEach(tab => tab.classList.remove('active'));
     });
 
-    // Chuyển tab danh mục File FREE / BUY chuẩn giữ nguyên kích thước khung theo tab FREE
+    // Chuyển tab danh mục File FREE / BUY
     function switchFileTab(type, btnElement) {
       const parentContainer = btnElement.closest('.container');
       const paneFree = parentContainer.querySelector('#paneFree');
