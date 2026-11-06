@@ -3,13 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="color-scheme" content="dark">
+  <meta name="color-scheme" content="dark light">
   <title>0704 — Portal</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- Khởi tạo Theme ngay lập tức để tránh chớp màn hình (FOUC) -->
+  <script>
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem('0704_theme');
+        if (savedTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <style>
     :root {
       --bg: #030305;
@@ -22,6 +34,76 @@
       --radius: 6px;
       --cut: 13px;
       --cut-sm: 7px;
+
+      /* Biến phụ trợ cho Dark Mode */
+      --bg-radial: rgba(255, 255, 255, 0.09);
+      --bg-grid: rgba(255, 255, 255, 0.025);
+      --header-bg: rgba(12, 12, 16, 0.78);
+      --header-shadow: rgba(0, 0, 0, 0.6);
+      --logo-shadow: rgba(255, 255, 255, 0.18);
+      --overlay-bg: rgba(0, 0, 4, 0.72);
+      --modal-bg: #0c0c10;
+      --modal-shadow: rgba(0, 0, 0, 0.85);
+      --alert-text-color: #a1a1b5;
+      --alert-btn-border: rgba(255, 255, 255, 0.22);
+      --alert-btn-bg: #14141b;
+      --active-grad: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.65) 100%);
+      --alert-grad: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.55) 100%);
+      --active-drop-shadow: rgba(255, 255, 255, 0.06);
+      --icon-box-bg: rgba(255, 255, 255, 0.03);
+      --icon-box-active-bg: rgba(255, 255, 255, 0.08);
+      --icon-box-active-border: rgba(255, 255, 255, 0.35);
+      --tag-bg: rgba(255, 255, 255, 0.05);
+      --tag-border: rgba(255, 255, 255, 0.12);
+      --tag-text: #b8b8c8;
+      --btn-border: rgba(255, 255, 255, 0.24);
+      --btn-bg: #171720;
+      --btn-hover-border: rgba(255, 255, 255, 0.48);
+      --btn-hover-bg: #22222e;
+      --btn-playing-border: rgba(255, 255, 255, 0.5);
+      --btn-playing-bg: #252534;
+      --btn-disabled-border: rgba(255, 255, 255, 0.14);
+      --btn-disabled-bg: #121218;
+    }
+
+    /* Bảng màu Chế độ Sáng (Light Mode) */
+    html[data-theme="light"] {
+      --bg: #f4f4f8;
+      --surface: #ffffff;
+      --surface-hover: #f9f9fc;
+      --surface-active: #f1f1f7;
+      --border: rgba(0, 0, 0, 0.13);
+      --text: #0f0f14;
+      --text-muted: #646478;
+
+      --bg-radial: rgba(0, 0, 0, 0.04);
+      --bg-grid: rgba(0, 0, 0, 0.035);
+      --header-bg: rgba(255, 255, 255, 0.85);
+      --header-shadow: rgba(0, 0, 0, 0.07);
+      --logo-shadow: rgba(0, 0, 0, 0.12);
+      --overlay-bg: rgba(15, 15, 22, 0.45);
+      --modal-bg: #ffffff;
+      --modal-shadow: rgba(0, 0, 0, 0.18);
+      --alert-text-color: #525266;
+      --alert-btn-border: rgba(0, 0, 0, 0.2);
+      --alert-btn-bg: #f5f5fa;
+      --active-grad: linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.65) 100%);
+      --alert-grad: linear-gradient(135deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.45) 100%);
+      --active-drop-shadow: rgba(0, 0, 0, 0.08);
+      --icon-box-bg: rgba(0, 0, 0, 0.03);
+      --icon-box-active-bg: rgba(0, 0, 0, 0.06);
+      --icon-box-active-border: rgba(0, 0, 0, 0.35);
+      --tag-bg: rgba(0, 0, 0, 0.045);
+      --tag-border: rgba(0, 0, 0, 0.12);
+      --tag-text: #4a4a5e;
+      --btn-border: rgba(0, 0, 0, 0.22);
+      --btn-bg: #f3f3f8;
+      --btn-hover-border: rgba(0, 0, 0, 0.45);
+      --btn-hover-bg: #e8e8f0;
+      --btn-playing-border: rgba(0, 0, 0, 0.5);
+      --btn-playing-bg: #e2e2ec;
+      --btn-disabled-border: rgba(0, 0, 0, 0.12);
+      --btn-disabled-bg: #ebebf0;
     }
 
     * {
@@ -31,12 +113,18 @@
       -webkit-tap-highlight-color: transparent !important;
     }
 
+    html {
+      overflow-y: scroll;
+      -webkit-text-size-adjust: 100%;
+    }
+
     html, body {
       background-color: var(--bg);
       color: var(--text);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     a, a:link, a:visited, a:hover, a:active, button {
@@ -47,20 +135,22 @@
 
     body {
       background-image: 
-        radial-gradient(circle at 50% -10%, rgba(255, 255, 255, 0.09) 0%, transparent 55%),
-        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+        radial-gradient(circle at 50% -10%, var(--bg-radial) 0%, transparent 55%),
+        linear-gradient(to right, var(--bg-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--bg-grid) 1px, transparent 1px);
       background-size: 100% 100%, 28px 28px, 28px 28px;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       padding: 24px 14px;
     }
 
     .container {
       width: 100%;
       max-width: 480px;
+      margin: auto 0;
       position: relative;
       z-index: 1;
     }
@@ -72,12 +162,13 @@
       align-items: center;
       margin-bottom: 24px;
       padding: 14px 16px;
-      background: rgba(12, 12, 16, 0.75);
+      background: var(--header-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 8px 32px var(--header-shadow);
+      transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     .brand-wrap {
@@ -89,14 +180,15 @@
     .brand-logo {
       width: 38px;
       height: 38px;
-      background: var(--text);
+      background: #ffffff;
       border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 16px rgba(255, 255, 255, 0.18);
+      box-shadow: 0 0 16px var(--logo-shadow);
       overflow: hidden;
       flex-shrink: 0;
+      border: 1px solid var(--border);
     }
 
     .brand-logo img {
@@ -122,6 +214,54 @@
       letter-spacing: 0.08em;
     }
 
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Nút Chỉnh Sáng / Tối */
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: var(--icon-box-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .theme-toggle:hover {
+      background: var(--surface-hover);
+      border-color: var(--icon-box-active-border);
+    }
+
+    .theme-toggle svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .theme-toggle .icon-sun {
+      display: block;
+    }
+
+    .theme-toggle .icon-moon {
+      display: none;
+    }
+
+    html[data-theme="light"] .theme-toggle .icon-sun {
+      display: none;
+    }
+
+    html[data-theme="light"] .theme-toggle .icon-moon {
+      display: block;
+    }
+
     .status-badge {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
@@ -134,6 +274,7 @@
       display: flex;
       align-items: center;
       gap: 7px;
+      height: 32px;
     }
 
     .status-dot {
@@ -150,11 +291,11 @@
       50% { opacity: 0.45; transform: scale(0.85); }
     }
 
-    /* Modal Thông Báo & Modal Xem Thêm (Dùng chung phong cách vát 2 góc chéo) */
+    /* Modal Thông Báo & Modal Xem Thêm */
     .alert-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 4, 0.72);
+      background: var(--overlay-bg);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       display: flex;
@@ -178,7 +319,7 @@
       max-width: 420px;
       transform: translateY(0) scale(1);
       transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.85));
+      filter: drop-shadow(0 20px 40px var(--modal-shadow));
     }
 
     .alert-overlay.hidden .alert-box {
@@ -186,15 +327,16 @@
     }
 
     .alert-border {
-      background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.55) 100%);
+      background: var(--alert-grad);
       padding: 1px;
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
     }
 
     .alert-inner {
-      background: #0c0c10;
+      background: var(--modal-bg);
       padding: 24px 20px;
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      transition: background 0.25s ease;
     }
 
     .alert-title {
@@ -214,13 +356,13 @@
       width: 18px;
       height: 18px;
       color: var(--text);
-      filter: drop-shadow(0 0 6px rgba(255,255,255,0.35));
+      filter: drop-shadow(0 0 6px var(--logo-shadow));
     }
 
     .alert-text {
       font-size: 13.5px;
       line-height: 1.55;
-      color: #a1a1b5;
+      color: var(--alert-text-color);
       margin-bottom: 20px;
     }
 
@@ -243,7 +385,7 @@
       position: relative;
       z-index: 1;
       isolation: isolate;
-      background: rgba(255, 255, 255, 0.22);
+      background: var(--alert-btn-border);
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
       transition: all 0.2s ease;
     }
@@ -252,7 +394,7 @@
       content: '';
       position: absolute;
       inset: 1px;
-      background: #14141b;
+      background: var(--alert-btn-bg);
       z-index: -1;
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
       transition: background 0.2s ease;
@@ -352,7 +494,7 @@
     }
 
     .cat-btn-wrap.active {
-      background: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.65) 100%);
+      background: var(--active-grad);
     }
 
     .cat-btn {
@@ -380,18 +522,19 @@
       color: var(--text);
     }
 
-    /* Cố định chiều cao theo chuẩn của Tab FREE */
+    /* Fix triệt để lỗi đổi tab bị giật kích thước trên Safari Mobile bằng CSS Grid Stack */
     .file-container-wrapper {
-      position: relative;
-      min-height: 172px; 
+      display: grid;
+      grid-template-columns: 100%;
+      align-items: start;
       margin-bottom: 24px;
+      width: 100%;
     }
 
     .file-pane {
-      position: absolute;
-      top: 0;
-      left: 0;
+      grid-area: 1 / 1;
       width: 100%;
+      min-width: 0;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -399,24 +542,26 @@
       visibility: hidden;
       pointer-events: none;
       transition: opacity 0.2s ease;
+      z-index: 1;
     }
 
     .file-pane.active {
-      position: relative;
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
+      z-index: 2;
     }
 
     /* Khung Tab vát góc mục file */
     .tab-wrap-outer {
+      width: 100%;
       transition: filter 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
       cursor: pointer;
     }
 
     .tab-wrap-outer.active {
       transform: translateY(-2px);
-      filter: drop-shadow(0 10px 20px rgba(255, 255, 255, 0.06));
+      filter: drop-shadow(0 10px 20px var(--active-drop-shadow));
       z-index: 2;
     }
 
@@ -428,7 +573,7 @@
     }
 
     .tab-wrap-outer.active .tab-border {
-      background: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.65) 100%);
+      background: var(--active-grad);
     }
 
     .tab-inner {
@@ -469,7 +614,7 @@
     .icon-box {
       width: 40px;
       height: 40px;
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--icon-box-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       display: flex;
@@ -481,9 +626,9 @@
     }
 
     .tab-wrap-outer.active .icon-box {
-      border-color: rgba(255, 255, 255, 0.35);
+      border-color: var(--icon-box-active-border);
       color: var(--text);
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--icon-box-active-bg);
     }
 
     .item-meta {
@@ -508,9 +653,9 @@
       font-weight: 500;
       padding: 2px 6px;
       border-radius: 4px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #b8b8c8;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--tag-text);
     }
 
     .item-sub {
@@ -545,7 +690,7 @@
       position: relative;
       z-index: 1;
       isolation: isolate;
-      background: rgba(255, 255, 255, 0.24);
+      background: var(--btn-border);
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
       transition: all 0.2s ease;
     }
@@ -554,18 +699,18 @@
       content: '';
       position: absolute;
       inset: 1px;
-      background: #171720;
+      background: var(--btn-bg);
       z-index: -1;
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
       transition: background 0.2s ease;
     }
 
     .btn:hover {
-      background: rgba(255, 255, 255, 0.48);
+      background: var(--btn-hover-border);
     }
 
     .btn:hover::before {
-      background: #22222e;
+      background: var(--btn-hover-bg);
     }
 
     .tab-wrap-outer.active .btn-main {
@@ -579,11 +724,11 @@
     }
 
     .btn-demo.playing {
-      background: rgba(255, 255, 255, 0.5);
+      background: var(--btn-playing-border);
     }
 
     .btn-demo.playing::before {
-      background: #252534;
+      background: var(--btn-playing-bg);
     }
 
     /* Trạng thái Bảo trì */
@@ -594,13 +739,13 @@
     }
 
     .btn:disabled {
-      background: rgba(255, 255, 255, 0.14) !important;
+      background: var(--btn-disabled-border) !important;
       color: var(--text-muted) !important;
       cursor: not-allowed;
     }
 
     .btn:disabled::before {
-      background: #121218 !important;
+      background: var(--btn-disabled-bg) !important;
     }
 
     /* Khung Video Demo */
@@ -608,7 +753,7 @@
       width: 100%;
       border-radius: 6px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      border: 1px solid var(--border);
       background: #000;
       display: none;
     }
@@ -748,13 +893,33 @@
           <span>KEY & FILE PORTAL</span>
         </div>
       </div>
-      <div class="status-badge">
-        <span class="status-dot"></span>
-        ONLINE
+      <div class="header-right">
+        <button type="button" class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Chuyển đổi giao diện Sáng / Tối" aria-label="Đổi giao diện Sáng Tối">
+          <!-- Icon Mặt Trời (Hiện ở chế độ Tối để bấm sang Sáng) -->
+          <svg class="icon-sun" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <!-- Icon Mặt Trăng (Hiện ở chế độ Sáng để bấm sang Tối) -->
+          <svg class="icon-moon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          ONLINE
+        </div>
       </div>
     </header>
 
-    <!-- Phần 1: Hệ thống Key (Đã bỏ Get Key, chỉ giữ lại Mua Key VIP) -->
+    <!-- Phần 1: Hệ thống Key -->
     <div class="section-head">
       <span>01. Hệ thống Key</span>
       <span>XÁC THỰC</span>
@@ -806,11 +971,11 @@
       </div>
     </div>
 
-    <!-- Vùng chứa các tab nội dung -->
+    <!-- Vùng chứa các tab nội dung (Dùng CSS Grid giữ cố định kích thước) -->
     <div class="file-container-wrapper">
       <!-- Nội dung Tab FREE -->
       <div id="paneFree" class="file-pane active">
-        <!-- Mục 1: Free Fire Dylib (Đang bảo trì, nếu mở bảo trì cũng dùng nút Xem Thêm) -->
+        <!-- Mục 1: Free Fire Dylib -->
         <div class="tab-wrap-outer maintenance">
           <div class="tab-border">
             <div class="tab-inner">
@@ -837,7 +1002,7 @@
           </div>
         </div>
 
-        <!-- Mục 2: AOV 0704 (Nút Tải File đã đổi thành Xem Thêm) -->
+        <!-- Mục 2: AOV 0704 -->
         <div class="tab-wrap-outer" onclick="activateTab(this, event)">
           <div class="tab-border">
             <div class="tab-inner">
@@ -925,6 +1090,23 @@
     const alertOverlay = document.getElementById('alertOverlay');
     const freeModalOverlay = document.getElementById('freeModalOverlay');
 
+    // Chuyển đổi Sáng / Tối và lưu vào localStorage
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const isLight = htmlEl.getAttribute('data-theme') === 'light';
+      const nextTheme = isLight ? 'dark' : 'light';
+
+      if (nextTheme === 'light') {
+        htmlEl.setAttribute('data-theme', 'light');
+      } else {
+        htmlEl.removeAttribute('data-theme');
+      }
+
+      try {
+        localStorage.setItem('0704_theme', nextTheme);
+      } catch (e) {}
+    }
+
     // Đóng thông báo hệ thống mở đầu
     function closeAlert() {
       alertOverlay.classList.add('hidden');
@@ -973,13 +1155,30 @@
       tabs.forEach(tab => tab.classList.remove('active'));
     });
 
-    // Chuyển tab danh mục File FREE / BUY
+    // Chuyển tab danh mục File FREE / BUY (kèm tự động đóng video ở tab cũ để không bị giãn khung)
     function switchFileTab(type, btnElement) {
       const parentContainer = btnElement.closest('.container');
       const paneFree = parentContainer.querySelector('#paneFree');
       const paneBuy = parentContainer.querySelector('#paneBuy');
       const btnWrapFree = parentContainer.querySelector('#btnWrapFree');
       const btnWrapBuy = parentContainer.querySelector('#btnWrapBuy');
+
+      // Đóng các video đang mở khi chuyển tab để giữ nguyên kích thước chuẩn
+      const allVideos = parentContainer.querySelectorAll('.video-container.show');
+      allVideos.forEach(vc => {
+        vc.classList.remove('show');
+        const v = vc.querySelector('video');
+        if (v) v.pause();
+        const tabInner = vc.closest('.tab-inner');
+        if (tabInner) {
+          const demoBtn = tabInner.querySelector('.btn-demo');
+          if (demoBtn) {
+            demoBtn.classList.remove('playing');
+            const span = demoBtn.querySelector('span');
+            if (span) span.innerText = 'Xem Demo';
+          }
+        }
+      });
 
       if (type === 'free') {
         btnWrapFree.classList.add('active');
