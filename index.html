@@ -623,32 +623,44 @@
     <div class="file-container-wrapper">
       <!-- Nội dung Tab FREE -->
       <div id="paneFree" class="file-pane active">
-        <!-- Mục 1: Free Fire Dylib -->
-        <div class="tab-wrap-outer maintenance">
+        <!-- Mục 1: AOV CHẤP TỐ -->
+<div class="tab-wrap-outer" onclick="activateTab(this, event)">
           <div class="tab-border">
             <div class="tab-inner">
               <div class="tab-row">
                 <div class="item-left">
                   <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                   </div>
                   <div class="item-meta">
                     <div class="item-title">
-                      Free Fire Dylib
-                      <span class="tag">.DYLIB</span>
+                      AOV CHẤP TỐ
+                      <span class="tag">.IPA</span>
                     </div>
-                    <div class="item-sub">Inject qua TrollFools</div>
+                    <div class="item-sub">Hỗ trợ cài đặt qua trực tiếp</div>
                   </div>
                 </div>
+                
                 <div class="actions">
-                  <button type="button" class="btn btn-main" disabled>
-                    Đang bảo trì
+                  <button type="button" class="btn btn-demo" onclick="toggleVideo(this, event)">
+                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    <span>Xem Demo</span>
+                  </button>
+                  <button type="button" class="btn btn-main" onclick="openFreeModal('AOV CHẤP TỐ — .IPA', 'https://x0704.vercel.app/getkeyaovchapto.html', 'https://ipas.cc/hre8e4', this, event)">
+                    Xem Thêm
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                   </button>
                 </div>
+              </div>
+              
+              <!-- Khung phát Video Demo trượt mượt mà -->
+              <div class="video-container">
+                <video src="https://cdn.upanhlaylink.com/i/Wi5vhejZ.webp4" controls playsinline preload="metadata"></video>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
         <!-- Mục 2: AOV 0704 -->
         <div class="tab-wrap-outer" onclick="activateTab(this, event)">
