@@ -28,12 +28,11 @@
     :root {
       --bg: #030305;
       
-      /* Nền đặc hoàn toàn để hết mờ nhòe */
       --surface: #0a0a0f;
       --surface-hover: #12121a;
       --surface-active: #181822;
       
-      --border: rgba(255, 255, 255, 0.18); /* Nét mảnh, sắc */
+      --border: rgba(255, 255, 255, 0.18); 
       
       --text: #ffffff;
       --text-muted: #8a8a9e;
@@ -41,11 +40,10 @@
       --cut: 13px;
       --cut-sm: 7px;
 
-      /* Lưới nền mỏng lại, tinh tế không gây rối mắt */
       --bg-radial: rgba(255, 255, 255, 0.08);
       --bg-grid: rgba(255, 255, 255, 0.035); 
       
-      --header-bg: rgba(8, 8, 12, 0.85); /* Trong suốt nhẹ cho header thôi */
+      --header-bg: rgba(8, 8, 12, 0.85); 
       --header-shadow: rgba(0, 0, 0, 0.6);
       --logo-shadow: rgba(255, 255, 255, 0.18);
       --overlay-bg: rgba(0, 0, 4, 0.85);
@@ -114,17 +112,8 @@
       --btn-disabled-bg: #ebebf0;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent !important;
-    }
-
-    html {
-      overflow-y: scroll;
-      -webkit-text-size-adjust: 100%;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent !important; }
+    html { overflow-y: scroll; -webkit-text-size-adjust: 100%; }
 
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -132,19 +121,12 @@
     ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
     html, body {
-      background-color: var(--bg);
-      color: var(--text);
+      background-color: var(--bg); color: var(--text);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
       transition: background-color 0.25s ease, color 0.25s ease;
     }
-
-    a, button {
-      color: inherit;
-      text-decoration: none;
-      outline: none;
-    }
+    a, button { color: inherit; text-decoration: none; outline: none; }
 
     body {
       background-image: 
@@ -152,42 +134,27 @@
         linear-gradient(to right, var(--bg-grid) 1px, transparent 1px),
         linear-gradient(to bottom, var(--bg-grid) 1px, transparent 1px);
       background-size: 100% 100%, 28px 28px, 28px 28px;
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; justify-content: center; align-items: flex-start;
       padding: 24px 14px;
     }
 
-    .container {
-      width: 100%;
-      max-width: 480px;
-      margin: auto 0;
-      position: relative;
-      z-index: 1;
-    }
+    .container { width: 100%; max-width: 480px; margin: auto 0; position: relative; z-index: 1; }
 
-    /* =========================================
-       2. HOẠT ẢNH TRƯỢT LÊN (ENTRANCE ANIMATION)
-    ========================================= */
+    /* HOẠT ẢNH TRƯỢT LÊN */
     @keyframes slideUpFade {
       0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-
     .header { animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
     .section-head { animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
     .file-category-tabs { animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both; }
     .tab-wrap-outer { animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
     
-    .tab-group .tab-wrap-outer:nth-child(1), .file-pane .tab-wrap-outer:nth-child(1) { animation-delay: 0.2s; }
-    .tab-group .tab-wrap-outer:nth-child(2), .file-pane .tab-wrap-outer:nth-child(2) { animation-delay: 0.3s; }
-    .tab-group .tab-wrap-outer:nth-child(3), .file-pane .tab-wrap-outer:nth-child(3) { animation-delay: 0.4s; }
+    .tab-group .tab-wrap-outer:nth-child(1), .file-pane .tab-wrap-outer:nth-child(1) { animation-delay: 0.1s; }
+    .tab-group .tab-wrap-outer:nth-child(2), .file-pane .tab-wrap-outer:nth-child(2) { animation-delay: 0.2s; }
 
-    /* =========================================
-       3. CHI TIẾT HEADER & THÀNH PHẦN
-    ========================================= */
+    /* HEADER & CHỮ NẰM SÁT */
     .header {
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 24px; padding: 14px 16px;
@@ -197,7 +164,6 @@
       box-shadow: 0 8px 32px var(--header-shadow);
       transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
-
     .brand-wrap { display: flex; align-items: center; gap: 12px; }
     .brand-logo {
       width: 38px; height: 38px; background: #ffffff; border-radius: 6px;
@@ -207,17 +173,18 @@
     }
     .brand-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
     
+    /* Ép 2 dòng chữ sát lại nhau */
+    .brand-text { display: flex; flex-direction: column; gap: 3px; justify-content: center; }
     .brand-text h1 {
-      font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 700;
-      letter-spacing: 0.1em; line-height: 1.2;
+      font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700;
+      letter-spacing: 0.05em; line-height: 1; white-space: nowrap; margin: 0;
     }
     .brand-text span {
       font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted);
-      text-transform: uppercase; letter-spacing: 0.08em;
+      text-transform: uppercase; letter-spacing: 0.08em; line-height: 1;
     }
 
     .header-right { display: flex; align-items: center; gap: 8px; }
-
     .theme-toggle {
       width: 32px; height: 32px; border-radius: 6px;
       background: var(--icon-box-bg); border: 1px solid var(--border);
@@ -251,14 +218,11 @@
       transition: opacity 0.3s ease, visibility 0.3s ease;
     }
     .alert-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    
     .alert-box {
       width: 100%; max-width: 420px; transform: translateY(0) scale(1);
-      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-      filter: drop-shadow(0 20px 40px var(--modal-shadow));
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); filter: drop-shadow(0 20px 40px var(--modal-shadow));
     }
     .alert-overlay.hidden .alert-box { transform: translateY(16px) scale(0.96); }
-    
     .alert-border {
       background: var(--alert-grad); padding: 1px;
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
@@ -346,16 +310,12 @@
     }
     .file-pane.active { opacity: 1; visibility: visible; pointer-events: auto; z-index: 2; }
 
-    /* Khung Tab vát góc - NỀN ĐẶC SẮC NÉT */
+    /* KHUNG TAB - VÀ ICON CHỨA ẢNH LOGO */
     .tab-wrap-outer {
       width: 100%; cursor: pointer;
       transition: filter 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .tab-wrap-outer.active {
-      transform: translateY(-2px);
-      filter: drop-shadow(0 12px 24px var(--active-drop-shadow));
-      z-index: 2;
-    }
+    .tab-wrap-outer.active { transform: translateY(-2px); filter: drop-shadow(0 12px 24px var(--active-drop-shadow)); z-index: 2; }
     
     .tab-border {
       background: var(--border); padding: 1px;
@@ -381,7 +341,9 @@
       border: 1px solid var(--border); border-radius: var(--radius);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; color: var(--text-muted); transition: all 0.25s ease;
+      overflow: hidden; padding: 2px;
     }
+    .icon-box img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
     .tab-wrap-outer.active .icon-box {
       border-color: var(--icon-box-active-border); color: var(--text); background: var(--icon-box-active-bg);
     }
@@ -427,7 +389,7 @@
     .btn:disabled::before { background: var(--btn-disabled-bg) !important; }
 
     /* =========================================
-       4. KHUNG VIDEO DẠNG TRƯỢT (ACCORDION)
+       4. KHUNG DEMO DẠNG TRƯỢT (ACCORDION - ẢNH & VIDEO)
     ========================================= */
     .video-container {
       width: 100%; border-radius: 6px; overflow: hidden;
@@ -437,7 +399,12 @@
       margin-top: 0; opacity: 0;
     }
     .video-container.show { grid-template-rows: 1fr; margin-top: 12px; opacity: 1; }
-    .video-container video { min-height: 0; width: 100%; max-height: 280px; display: block; }
+    
+    /* Support both Video and Img in Demo Container */
+    .video-container video, 
+    .video-container img.demo-img {
+      min-height: 0; width: 100%; max-height: 280px; display: block; object-fit: contain;
+    }
 
     svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 
@@ -450,7 +417,7 @@
 </head>
 <body>
 
-  <!-- 1. Bảng Thông Báo Hệ Thống Lúc Vào Web -->
+  <!-- Bảng Thông Báo Hệ Thống Lúc Vào Web -->
   <div id="alertOverlay" class="alert-overlay">
     <div class="alert-box">
       <div class="alert-border">
@@ -489,7 +456,7 @@
     </div>
   </div>
 
-  <!-- 2. Bảng Xem Thêm (Cho các mục Tab FREE: Lấy Key Free & Tải File) -->
+  <!-- Bảng Xem Thêm Modal -->
   <div id="freeModalOverlay" class="alert-overlay hidden" style="display: none;" onclick="closeFreeModal()">
     <div class="alert-box" onclick="event.stopPropagation()">
       <div class="alert-border">
@@ -502,14 +469,14 @@
             Vui lòng lấy mã kích hoạt miễn phí trước khi sử dụng hoặc tải trực tiếp file cài đặt bên dưới.
           </div>
           <div class="alert-actions">
-            <a id="freeModalKeyBtn" href="https://sobikey.xyz/getkey.php?public=f418e3aeb43d2b6ba600a8bca438e6080a6bb9d0c9b9c1453819e3d3ce2606d5" target="_blank" rel="noopener" class="alert-btn">
+            <a id="freeModalKeyBtn" href="#" target="_blank" rel="noopener" class="alert-btn">
               <div class="btn-left">
                 <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
                 Lấy Key Free
               </div>
               <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
-            <a id="freeModalDownloadBtn" href="https://t.me/x0704cheat/568" target="_blank" rel="noopener" class="alert-btn">
+            <a id="freeModalDownloadBtn" href="#" target="_blank" rel="noopener" class="alert-btn">
               <div class="btn-left">
                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Tải File
@@ -535,16 +502,14 @@
         <div class="brand-logo">
           <img src="https://cdn.upanhlaylink.com/i/lNNH2V4K.png" alt="0704 Logo">
         </div>
-<div class="brand-text">
-  <h1 style="display: flex; align-items: center;">
-    0704
-    <img src="https://cdn.upanhlaylink.com/i/ARZSk0jT.png" alt="Verified" style="width: 16px; height: 16px; margin-left: 6px; user-select: none; pointer-events: none; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
-  </h1>
-  <span>KEY & FILE PORTAL</span>
-</div>
+        <!-- Đã xóa Tích Xanh & Ép 2 dòng chữ sát lại nhau -->
+        <div class="brand-text">
+          <h1>0704</h1>
+          <span>KEY & FILE PORTAL</span>
+        </div>
       </div>
       <div class="header-right">
-        <button type="button" class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Chuyển đổi giao diện Sáng / Tối" aria-label="Đổi giao diện Sáng Tối">
+        <button type="button" class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Chuyển đổi giao diện Sáng / Tối">
           <svg class="icon-sun" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -621,55 +586,59 @@
 
     <!-- Vùng chứa các tab nội dung -->
     <div class="file-container-wrapper">
-      <!-- Nội dung Tab FREE -->
+      
+      <!--================= NỘI DUNG TAB FREE =================-->
       <div id="paneFree" class="file-pane active">
-        <!-- Mục 1: AOV CHẤP TỐ -->
-<div class="tab-wrap-outer" onclick="activateTab(this, event)">
+        
+        <!-- MỤC 1: AOV CHẤP TỐ (CÓ NÚT XEM DEMO ẢNH) -->
+        <div class="tab-wrap-outer" onclick="activateTab(this, event)">
           <div class="tab-border">
             <div class="tab-inner">
               <div class="tab-row">
                 <div class="item-left">
+                  <!-- Ảnh Logo AOV CHẤP TỐ -->
                   <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    <img src="https://cdn.upanhlaylink.com/i/fBZvOBEN.jpeg" alt="Logo AOV Chấp Tố">
                   </div>
                   <div class="item-meta">
                     <div class="item-title">
-                      AOV CHẤP TỐ
+                      AOV VIP
                       <span class="tag">.IPA</span>
                     </div>
-                    <div class="item-sub">Hỗ trợ cài đặt qua trực tiếp</div>
+                    <div class="item-sub">Hỗ trợ cài trực tiếp</div>
                   </div>
                 </div>
                 
                 <div class="actions">
-                  <button type="button" class="btn btn-demo" onclick="toggleVideo(this, event)">
+                  <!-- NÚT XEM DEMO (ẢNH) -->
+                  <button type="button" class="btn btn-demo" onclick="toggleDemo(this, event)">
                     <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     <span>Xem Demo</span>
                   </button>
-                  <button type="button" class="btn btn-main" onclick="openFreeModal('AOV CHẤP TỐ — .IPA', 'https://x0704.vercel.app/getkeyaovchapto.html', 'https://ipas.cc/hre8e4', this, event)">
+                  <button type="button" class="btn btn-main" onclick="openFreeModal('AOV CHẤP TỐ — .IPA', 'https://link4m.org/JZLMTOGD', 'https://t.me/x0704cheat', this, event)">
                     Xem Thêm
                     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                   </button>
                 </div>
               </div>
               
-              <!-- Khung phát Video Demo trượt mượt mà -->
+              <!-- KHUNG PHÁT DEMO ẢNH -->
               <div class="video-container">
-                <video src="https://cdn.upanhlaylink.com/i/Wi5vhejZ.webp4" controls playsinline preload="metadata"></video>
+                <img src="https://cdn.upanhlaylink.com/i/hZX9azFN.jpeg" alt="AOV Chấp Tố Demo" class="demo-img">
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-        <!-- Mục 2: AOV 0704 -->
+        <!-- MỤC 2: AOV TIPA -->
         <div class="tab-wrap-outer" onclick="activateTab(this, event)">
           <div class="tab-border">
             <div class="tab-inner">
               <div class="tab-row">
                 <div class="item-left">
+                  <!-- Ảnh Logo AOV TIPA -->
                   <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    <img src="https://cdn.upanhlaylink.com/i/lNNH2V4K.png" alt="Logo AOV TIPA">
                   </div>
                   <div class="item-meta">
                     <div class="item-title">
@@ -681,7 +650,7 @@
                 </div>
                 
                 <div class="actions">
-                  <button type="button" class="btn btn-demo" onclick="toggleVideo(this, event)">
+                  <button type="button" class="btn btn-demo" onclick="toggleDemo(this, event)">
                     <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     <span>Xem Demo</span>
                   </button>
@@ -692,25 +661,28 @@
                 </div>
               </div>
               
-              <!-- Khung phát Video Demo trượt mượt mà -->
+              <!-- KHUNG PHÁT VIDEO DEMO -->
               <div class="video-container">
                 <video src="https://github.com/obiday/0704/raw/refs/heads/main/v1c044g50000dbk7ig7og65ur0u39sb0.mp4" controls playsinline preload="metadata"></video>
               </div>
             </div>
           </div>
         </div>
+
       </div>
 
-      <!-- Nội dung Tab BUY -->
+      <!--================= NỘI DUNG TAB BUY =================-->
       <div id="paneBuy" class="file-pane">
-        <!-- Tab 5: HUNTER (.IPA) -->
+        
+        <!-- MỤC: HUNTER -->
         <div class="tab-wrap-outer" onclick="activateTab(this, event)">
           <div class="tab-border">
             <div class="tab-inner">
               <div class="tab-row">
                 <div class="item-left">
+                  <!-- Ảnh Logo HUNTER -->
                   <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <img src="https://cdn.upanhlaylink.com/i/9aSpGMFH.png" alt="Logo Hunter">
                   </div>
                   <div class="item-meta">
                     <div class="item-title">
@@ -722,7 +694,7 @@
                 </div>
                 
                 <div class="actions">
-                  <button type="button" class="btn btn-demo" onclick="toggleVideo(this, event)">
+                  <button type="button" class="btn btn-demo" onclick="toggleDemo(this, event)">
                     <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     <span>Xem Demo</span>
                   </button>
@@ -733,13 +705,14 @@
                 </div>
               </div>
               
-              <!-- Khung phát Video Demo -->
+              <!-- KHUNG PHÁT VIDEO DEMO -->
               <div class="video-container">
                 <video src="https://github.com/obiday/0704/raw/refs/heads/main/-3595283433764847805.mp4" controls playsinline preload="metadata"></video>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -818,12 +791,12 @@
       const btnWrapFree = parentContainer.querySelector('#btnWrapFree');
       const btnWrapBuy = parentContainer.querySelector('#btnWrapBuy');
 
-      // Đóng các video đang mở khi chuyển tab
-      const allVideos = parentContainer.querySelectorAll('.video-container.show');
-      allVideos.forEach(vc => {
+      const allDemos = parentContainer.querySelectorAll('.video-container.show');
+      allDemos.forEach(vc => {
         vc.classList.remove('show');
         const v = vc.querySelector('video');
-        if (v) v.pause();
+        if (v) v.pause(); // Chỉ pause nếu nó là video
+        
         const tabInner = vc.closest('.tab-inner');
         if (tabInner) {
           const demoBtn = tabInner.querySelector('.btn-demo');
@@ -848,17 +821,17 @@
       }
     }
 
-    function toggleVideo(btnElement, event) {
+    function toggleDemo(btnElement, event) {
       event.stopPropagation();
       const tabInner = btnElement.closest('.tab-inner');
-      const videoContainer = tabInner.querySelector('.video-container');
-      const video = videoContainer.querySelector('video');
+      const container = tabInner.querySelector('.video-container');
+      const video = container.querySelector('video'); // Có thể là null nếu đó là ảnh
       const btnText = btnElement.querySelector('span');
 
-      if (videoContainer.classList.contains('show')) {
-        videoContainer.classList.remove('show');
+      if (container.classList.contains('show')) {
+        container.classList.remove('show');
         btnElement.classList.remove('playing');
-        video.pause();
+        if (video) video.pause(); // Nếu là video thì dừng
         if (btnText) btnText.innerText = 'Xem Demo';
       } else {
         const parentTab = btnElement.closest('.tab-wrap-outer');
@@ -866,7 +839,7 @@
           tabs.forEach(tab => tab.classList.remove('active'));
           parentTab.classList.add('active');
         }
-        videoContainer.classList.add('show');
+        container.classList.add('show');
         btnElement.classList.add('playing');
         if (btnText) btnText.innerText = 'Đóng Demo';
       }
