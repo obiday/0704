@@ -23,12 +23,20 @@
   </script>
 
   <style>
+    /* =========================================
+       1. KHAI BÁO BIẾN - MÀU SẮC & GIAO DIỆN
+    ========================================= */
     :root {
       --bg: #030305;
-      --surface: #0d0d12;
-      --surface-hover: #14141c;
-      --surface-active: #181822;
-      --border: rgba(255, 255, 255, 0.14);
+      
+      /* Cập nhật: Làm thẻ trong suốt (kính mờ) */
+      --surface: rgba(15, 15, 22, 0.65);
+      --surface-hover: rgba(22, 22, 32, 0.75);
+      --surface-active: rgba(28, 28, 40, 0.85);
+      
+      /* Cập nhật: Viền sắc nét hơn */
+      --border: rgba(255, 255, 255, 0.22);
+      
       --text: #ffffff;
       --text-muted: #8a8a9e;
       --radius: 6px;
@@ -36,9 +44,10 @@
       --cut-sm: 7px;
 
       /* Biến phụ trợ cho Dark Mode */
-      --bg-radial: rgba(255, 255, 255, 0.09);
-      --bg-grid: rgba(255, 255, 255, 0.025);
-      --header-bg: rgba(12, 12, 16, 0.78);
+      /* Cập nhật: Tăng độ rõ của lưới nền */
+      --bg-radial: rgba(255, 255, 255, 0.12);
+      --bg-grid: rgba(255, 255, 255, 0.055);
+      --header-bg: rgba(12, 12, 16, 0.65);
       --header-shadow: rgba(0, 0, 0, 0.6);
       --logo-shadow: rgba(255, 255, 255, 0.18);
       --overlay-bg: rgba(0, 0, 4, 0.72);
@@ -47,9 +56,9 @@
       --alert-text-color: #a1a1b5;
       --alert-btn-border: rgba(255, 255, 255, 0.22);
       --alert-btn-bg: #14141b;
-      --active-grad: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.65) 100%);
+      --active-grad: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.9) 100%);
       --alert-grad: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.55) 100%);
-      --active-drop-shadow: rgba(255, 255, 255, 0.06);
+      --active-drop-shadow: rgba(255, 255, 255, 0.15);
       --icon-box-bg: rgba(255, 255, 255, 0.03);
       --icon-box-active-bg: rgba(255, 255, 255, 0.08);
       --icon-box-active-border: rgba(255, 255, 255, 0.35);
@@ -69,16 +78,20 @@
     /* Bảng màu Chế độ Sáng (Light Mode) */
     html[data-theme="light"] {
       --bg: #f4f4f8;
-      --surface: #ffffff;
-      --surface-hover: #f9f9fc;
-      --surface-active: #f1f1f7;
-      --border: rgba(0, 0, 0, 0.13);
+      
+      /* Cập nhật: Thẻ kính mờ chế độ sáng */
+      --surface: rgba(255, 255, 255, 0.7);
+      --surface-hover: rgba(245, 245, 250, 0.8);
+      --surface-active: rgba(235, 235, 245, 0.9);
+      
+      --border: rgba(0, 0, 0, 0.2);
       --text: #0f0f14;
       --text-muted: #646478;
 
-      --bg-radial: rgba(0, 0, 0, 0.04);
-      --bg-grid: rgba(0, 0, 0, 0.035);
-      --header-bg: rgba(255, 255, 255, 0.85);
+      /* Cập nhật: Lưới rõ nét cho chế độ sáng */
+      --bg-radial: rgba(0, 0, 0, 0.06);
+      --bg-grid: rgba(0, 0, 0, 0.09);
+      --header-bg: rgba(255, 255, 255, 0.75);
       --header-shadow: rgba(0, 0, 0, 0.07);
       --logo-shadow: rgba(0, 0, 0, 0.12);
       --overlay-bg: rgba(15, 15, 22, 0.45);
@@ -87,9 +100,9 @@
       --alert-text-color: #525266;
       --alert-btn-border: rgba(0, 0, 0, 0.2);
       --alert-btn-bg: #f5f5fa;
-      --active-grad: linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.65) 100%);
+      --active-grad: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.8) 100%);
       --alert-grad: linear-gradient(135deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.45) 100%);
-      --active-drop-shadow: rgba(0, 0, 0, 0.08);
+      --active-drop-shadow: rgba(0, 0, 0, 0.12);
       --icon-box-bg: rgba(0, 0, 0, 0.03);
       --icon-box-active-bg: rgba(0, 0, 0, 0.06);
       --icon-box-active-border: rgba(0, 0, 0, 0.35);
@@ -118,6 +131,12 @@
       -webkit-text-size-adjust: 100%;
     }
 
+    /* Thanh cuộn phong cách Minimal */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
     html, body {
       background-color: var(--bg);
       color: var(--text);
@@ -127,7 +146,7 @@
       transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    a, a:link, a:visited, a:hover, a:active, button {
+    a, button {
       color: inherit;
       text-decoration: none;
       outline: none;
@@ -155,7 +174,26 @@
       z-index: 1;
     }
 
-    /* Header */
+    /* =========================================
+       2. HOẠT ẢNH TRƯỢT LÊN (ENTRANCE ANIMATION)
+    ========================================= */
+    @keyframes slideUpFade {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .header { animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .section-head { animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
+    .file-category-tabs { animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both; }
+    .tab-wrap-outer { animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    
+    .tab-group .tab-wrap-outer:nth-child(1), .file-pane .tab-wrap-outer:nth-child(1) { animation-delay: 0.2s; }
+    .tab-group .tab-wrap-outer:nth-child(2), .file-pane .tab-wrap-outer:nth-child(2) { animation-delay: 0.3s; }
+    .tab-group .tab-wrap-outer:nth-child(3), .file-pane .tab-wrap-outer:nth-child(3) { animation-delay: 0.4s; }
+
+    /* =========================================
+       3. CHI TIẾT HEADER & THÀNH PHẦN
+    ========================================= */
     .header {
       display: flex;
       justify-content: space-between;
@@ -171,33 +209,19 @@
       transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .brand-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .brand-wrap { display: flex; align-items: center; gap: 12px; }
     .brand-logo {
-      width: 38px;
-      height: 38px;
+      width: 38px; height: 38px;
       background: #ffffff;
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       box-shadow: 0 0 16px var(--logo-shadow);
       overflow: hidden;
       flex-shrink: 0;
       border: 1px solid var(--border);
     }
-
-    .brand-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
+    .brand-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    
     .brand-text h1 {
       font-family: 'JetBrains Mono', monospace;
       font-size: 17px;
@@ -205,7 +229,6 @@
       letter-spacing: 0.1em;
       line-height: 1.2;
     }
-
     .brand-text span {
       font-family: 'JetBrains Mono', monospace;
       font-size: 10px;
@@ -214,54 +237,31 @@
       letter-spacing: 0.08em;
     }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .header-right { display: flex; align-items: center; gap: 8px; }
 
-    /* Nút Chỉnh Sáng / Tối */
+    /* Nút Chuyển Giao Diện */
     .theme-toggle {
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       border-radius: 6px;
       background: var(--icon-box-bg);
       border: 1px solid var(--border);
       color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       cursor: pointer;
       transition: all 0.2s ease;
       flex-shrink: 0;
     }
-
     .theme-toggle:hover {
       background: var(--surface-hover);
       border-color: var(--icon-box-active-border);
     }
+    .theme-toggle svg { width: 15px; height: 15px; }
+    .theme-toggle .icon-sun { display: block; }
+    .theme-toggle .icon-moon { display: none; }
+    html[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+    html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
 
-    .theme-toggle svg {
-      width: 15px;
-      height: 15px;
-    }
-
-    .theme-toggle .icon-sun {
-      display: block;
-    }
-
-    .theme-toggle .icon-moon {
-      display: none;
-    }
-
-    html[data-theme="light"] .theme-toggle .icon-sun {
-      display: none;
-    }
-
-    html[data-theme="light"] .theme-toggle .icon-moon {
-      display: block;
-    }
-
+    /* Nút Online (Status) */
     .status-badge {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
@@ -271,531 +271,252 @@
       border: 1px solid rgba(16, 185, 129, 0.25);
       padding: 6px 11px;
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
+      display: flex; align-items: center; gap: 7px;
       height: 32px;
     }
-
     .status-dot {
-      width: 6px;
-      height: 6px;
+      width: 6px; height: 6px;
       background: #10b981;
       border-radius: 50%;
       box-shadow: 0 0 8px #10b981;
       animation: pulse 2s infinite;
     }
-
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.45; transform: scale(0.85); }
     }
 
-    /* Modal Thông Báo & Modal Xem Thêm */
+    /* Modal / Alert Overlay */
     .alert-overlay {
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background: var(--overlay-bg);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-      z-index: 999;
-      opacity: 1;
-      visibility: visible;
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      display: flex; justify-content: center; align-items: center;
+      padding: 16px; z-index: 999;
+      opacity: 1; visibility: visible;
       transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-
-    .alert-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
+    .alert-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    
     .alert-box {
-      width: 100%;
-      max-width: 420px;
+      width: 100%; max-width: 420px;
       transform: translateY(0) scale(1);
       transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
       filter: drop-shadow(0 20px 40px var(--modal-shadow));
     }
-
-    .alert-overlay.hidden .alert-box {
-      transform: translateY(16px) scale(0.96);
-    }
-
+    .alert-overlay.hidden .alert-box { transform: translateY(16px) scale(0.96); }
+    
     .alert-border {
       background: var(--alert-grad);
-      padding: 1px;
+      padding: 1.5px;
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
     }
-
     .alert-inner {
       background: var(--modal-bg);
       padding: 24px 20px;
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
       transition: background 0.25s ease;
     }
-
+    
     .alert-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      font-weight: 700; color: var(--text);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
     }
-
-    .alert-title svg {
-      width: 18px;
-      height: 18px;
-      color: var(--text);
-      filter: drop-shadow(0 0 6px var(--logo-shadow));
-    }
-
-    .alert-text {
-      font-size: 13.5px;
-      line-height: 1.55;
-      color: var(--alert-text-color);
-      margin-bottom: 20px;
-    }
-
-    .alert-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-
+    .alert-title svg { width: 18px; height: 18px; color: var(--text); filter: drop-shadow(0 0 6px var(--logo-shadow)); }
+    .alert-text { font-size: 13.5px; line-height: 1.55; color: var(--alert-text-color); margin-bottom: 20px; }
+    
+    .alert-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
     .alert-btn {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 12px 16px;
-      color: var(--text) !important;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-      z-index: 1;
-      isolation: isolate;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+      padding: 12px 16px; color: var(--text) !important;
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 1; isolation: isolate;
       background: var(--alert-btn-border);
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
       transition: all 0.2s ease;
     }
-
     .alert-btn::before {
-      content: '';
-      position: absolute;
-      inset: 1px;
-      background: var(--alert-btn-bg);
-      z-index: -1;
+      content: ''; position: absolute; inset: 1.5px;
+      background: var(--alert-btn-bg); z-index: -1;
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
       transition: background 0.2s ease;
     }
-
-    .alert-btn .btn-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .alert-btn:hover {
-      background: var(--text);
-      color: var(--bg) !important;
-    }
-
-    .alert-btn:hover::before {
-      background: var(--text);
-    }
-
-    .alert-btn svg {
-      transition: transform 0.2s ease;
-    }
-
-    .alert-btn:hover svg {
-      transform: translateX(3px);
-      color: var(--bg);
-    }
-
-    .alert-footer {
-      display: flex;
-      justify-content: flex-end;
-    }
-
+    .alert-btn .btn-left { display: flex; align-items: center; gap: 10px; }
+    .alert-btn:hover { background: var(--text); color: var(--bg) !important; filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.15)); }
+    .alert-btn:hover::before { background: var(--text); }
+    .alert-btn svg { transition: transform 0.2s ease; }
+    .alert-btn:hover svg { transform: translateX(3px); color: var(--bg); }
+    
+    .alert-footer { display: flex; justify-content: flex-end; }
     .btn-close-text {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      background: transparent;
-      color: var(--text-muted);
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 0;
-      transition: color 0.2s ease;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+      background: transparent; color: var(--text-muted); border: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 0; transition: color 0.2s ease;
     }
+    .btn-close-text:hover { color: var(--text); }
+    .btn-close-text svg { transition: transform 0.2s ease; }
+    .btn-close-text:hover svg { transform: translateX(3px); }
 
-    .btn-close-text:hover {
-      color: var(--text);
-    }
-
-    .btn-close-text svg {
-      transition: transform 0.2s ease;
-    }
-
-    .btn-close-text:hover svg {
-      transform: translateX(3px);
-    }
-
-    /* Tiêu đề từng phần */
+    /* Phần Khung Tab chung */
     .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      padding: 0 4px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; padding: 0 4px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;
     }
-
-    .tab-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    /* Thanh chọn Tab Phân loại (FREE / BUY) */
-    .file-category-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
+    
+    .tab-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+    
+    .file-category-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
     .cat-btn-wrap {
-      position: relative;
-      background: var(--border);
-      padding: 1px;
+      position: relative; background: var(--border); padding: 1.5px;
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
       transition: background 0.25s ease;
     }
-
-    .cat-btn-wrap.active {
-      background: var(--active-grad);
-    }
-
+    .cat-btn-wrap.active { background: var(--active-grad); }
+    
     .cat-btn {
-      width: 100%;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 11px;
-      text-align: center;
-      background: var(--surface);
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
+      width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+      padding: 11px; text-align: center; background: var(--surface); border: none;
+      color: var(--text-muted); cursor: pointer;
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       transition: all 0.25s ease;
     }
+    .cat-btn-wrap:hover .cat-btn { background: var(--surface-hover); color: var(--text); }
+    .cat-btn-wrap.active .cat-btn { background: var(--surface-active); color: var(--text); }
 
-    .cat-btn-wrap:hover .cat-btn {
-      background: var(--surface-hover);
-      color: var(--text);
-    }
-
-    .cat-btn-wrap.active .cat-btn {
-      background: var(--surface-active);
-      color: var(--text);
-    }
-
-    /* Fix triệt để lỗi đổi tab bị giật kích thước trên Safari Mobile bằng CSS Grid Stack */
     .file-container-wrapper {
-      display: grid;
-      grid-template-columns: 100%;
-      align-items: start;
-      margin-bottom: 24px;
-      width: 100%;
+      display: grid; grid-template-columns: 100%; align-items: start;
+      margin-bottom: 24px; width: 100%;
     }
-
     .file-pane {
-      grid-area: 1 / 1;
-      width: 100%;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-      z-index: 1;
+      grid-area: 1 / 1; width: 100%; min-width: 0;
+      display: flex; flex-direction: column; gap: 12px;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.2s ease; z-index: 1;
     }
+    .file-pane.active { opacity: 1; visibility: visible; pointer-events: auto; z-index: 2; }
 
-    .file-pane.active {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      z-index: 2;
-    }
-
-    /* Khung Tab vát góc mục file */
+    /* Khung Tab vát góc - GLASSMORPHISM */
     .tab-wrap-outer {
-      width: 100%;
+      width: 100%; cursor: pointer;
       transition: filter 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-      cursor: pointer;
     }
-
     .tab-wrap-outer.active {
       transform: translateY(-2px);
-      filter: drop-shadow(0 10px 20px var(--active-drop-shadow));
+      filter: drop-shadow(0 12px 24px var(--active-drop-shadow));
       z-index: 2;
     }
-
+    
     .tab-border {
-      background: var(--border);
-      padding: 1px;
+      background: var(--border); padding: 1.5px;
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
       transition: background 0.25s ease;
     }
-
-    .tab-wrap-outer.active .tab-border {
-      background: var(--active-grad);
-    }
-
+    .tab-wrap-outer.active .tab-border { background: var(--active-grad); }
+    
     .tab-inner {
-      background: var(--surface);
-      padding: 15px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      background: var(--surface); padding: 15px 16px;
+      display: flex; flex-direction: column; gap: 12px;
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       transition: background 0.25s ease;
     }
+    .tab-wrap-outer:hover .tab-inner { background: var(--surface-hover); }
+    .tab-wrap-outer.active .tab-inner { background: var(--surface-active); }
 
-    .tab-wrap-outer:hover .tab-inner {
-      background: var(--surface-hover);
-    }
-
-    .tab-wrap-outer.active .tab-inner {
-      background: var(--surface-active);
-    }
-
-    /* Hàng chính của mỗi Tab */
-    .tab-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-    }
-
-    .item-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-      flex: 1;
-    }
-
+    .tab-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%; }
+    .item-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+    
     .icon-box {
-      width: 40px;
-      height: 40px;
-      background: var(--icon-box-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: var(--text-muted);
-      transition: all 0.25s ease;
+      width: 40px; height: 40px; background: var(--icon-box-bg);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--text-muted); transition: all 0.25s ease;
     }
-
     .tab-wrap-outer.active .icon-box {
-      border-color: var(--icon-box-active-border);
-      color: var(--text);
-      background: var(--icon-box-active-bg);
+      border-color: var(--icon-box-active-border); color: var(--text); background: var(--icon-box-active-bg);
     }
-
-    .item-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      min-width: 0;
-    }
-
-    .item-title {
-      font-size: 14.5px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      flex-wrap: wrap;
-    }
-
+    
+    .item-meta { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .item-title { font-size: 14.5px; font-weight: 600; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    
     .tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9.5px;
-      font-weight: 500;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: var(--tag-bg);
-      border: 1px solid var(--tag-border);
-      color: var(--tag-text);
+      font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500;
+      padding: 2px 6px; border-radius: 4px;
+      background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--tag-text);
     }
+    .item-sub { font-size: 12.5px; color: var(--text-muted); line-height: 1.35; }
 
-    .item-sub {
-      font-size: 12.5px;
-      color: var(--text-muted);
-      line-height: 1.35;
-    }
-
-    /* Hệ thống nút bấm vát góc */
-    .actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-
+    /* Nút bấm (Buttons) */
+    .actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .btn {
-      font-family: 'Inter', sans-serif;
-      font-size: 12.5px;
-      font-weight: 500;
-      height: 36px;
-      padding: 0 15px;
-      color: var(--text) !important;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      user-select: none;
-      white-space: nowrap;
-      position: relative;
-      z-index: 1;
-      isolation: isolate;
+      font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 500;
+      height: 36px; padding: 0 15px; color: var(--text) !important;
+      border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; user-select: none; white-space: nowrap; position: relative; z-index: 1; isolation: isolate;
       background: var(--btn-border);
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
-      transition: all 0.2s ease;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     }
-
     .btn::before {
-      content: '';
-      position: absolute;
-      inset: 1px;
-      background: var(--btn-bg);
-      z-index: -1;
+      content: ''; position: absolute; inset: 1.5px; background: var(--btn-bg); z-index: -1;
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
       transition: background 0.2s ease;
     }
+    
+    /* Hiệu ứng Glow cho Button khi Hover */
+    .btn:hover { background: var(--btn-hover-border); filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.15)); }
+    html[data-theme="light"] .btn:hover { filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15)); }
+    .btn:hover::before { background: var(--btn-hover-bg); }
+    
+    .tab-wrap-outer.active .btn-main { background: var(--text); color: var(--bg) !important; font-weight: 600; }
+    .tab-wrap-outer.active .btn-main::before { background: var(--text); }
+    .btn-demo.playing { background: var(--btn-playing-border); }
+    .btn-demo.playing::before { background: var(--btn-playing-bg); }
+    
+    .tab-wrap-outer.maintenance { opacity: 0.45; pointer-events: none; filter: grayscale(100%); }
+    .btn:disabled { background: var(--btn-disabled-border) !important; color: var(--text-muted) !important; cursor: not-allowed; filter: none; }
+    .btn:disabled::before { background: var(--btn-disabled-bg) !important; }
 
-    .btn:hover {
-      background: var(--btn-hover-border);
-    }
-
-    .btn:hover::before {
-      background: var(--btn-hover-bg);
-    }
-
-    .tab-wrap-outer.active .btn-main {
-      background: var(--text);
-      color: var(--bg) !important;
-      font-weight: 600;
-    }
-
-    .tab-wrap-outer.active .btn-main::before {
-      background: var(--text);
-    }
-
-    .btn-demo.playing {
-      background: var(--btn-playing-border);
-    }
-
-    .btn-demo.playing::before {
-      background: var(--btn-playing-bg);
-    }
-
-    /* Trạng thái Bảo trì */
-    .tab-wrap-outer.maintenance {
-      opacity: 0.45;
-      pointer-events: none;
-      filter: grayscale(100%);
-    }
-
-    .btn:disabled {
-      background: var(--btn-disabled-border) !important;
-      color: var(--text-muted) !important;
-      cursor: not-allowed;
-    }
-
-    .btn:disabled::before {
-      background: var(--btn-disabled-bg) !important;
-    }
-
-    /* Khung Video Demo */
+    /* =========================================
+       4. KHUNG VIDEO DẠNG TRƯỢT (ACCORDION)
+    ========================================= */
     .video-container {
       width: 100%;
       border-radius: 6px;
       overflow: hidden;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       background: #000;
-      display: none;
+      
+      /* Cấu hình trượt mượt mà bằng CSS Grid */
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1), margin-top 0.3s, opacity 0.3s;
+      margin-top: 0;
+      opacity: 0;
     }
-
     .video-container.show {
-      display: block;
+      grid-template-rows: 1fr;
+      margin-top: 12px;
+      opacity: 1;
     }
-
     .video-container video {
+      min-height: 0; /* Rất quan trọng để Grid trượt hoạt động */
       width: 100%;
       max-height: 280px;
       display: block;
     }
 
-    svg {
-      width: 15px;
-      height: 15px;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      flex-shrink: 0;
-    }
+    svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 
-    /* Giao diện Điện thoại */
     @media (max-width: 480px) {
-      .tab-row {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-      }
-
-      .actions {
-        width: 100%;
-        display: flex;
-        gap: 8px;
-      }
-
-      .actions .btn {
-        flex: 1;
-      }
+      .tab-row { flex-direction: column; align-items: stretch; gap: 10px; }
+      .actions { width: 100%; display: flex; gap: 8px; }
+      .actions .btn { flex: 1; }
     }
   </style>
 </head>
@@ -853,15 +574,13 @@
             Vui lòng lấy mã kích hoạt miễn phí trước khi sử dụng hoặc tải trực tiếp file cài đặt bên dưới.
           </div>
           <div class="alert-actions">
-            <!-- Nút trên: Lấy Key Free -->
-            <a id="freeModalKeyBtn" href="https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470" target="_blank" rel="noopener" class="alert-btn">
+            <a id="freeModalKeyBtn" href="https://sobikey.xyz/getkey.php?public=f418e3aeb43d2b6ba600a8bca438e6080a6bb9d0c9b9c1453819e3d3ce2606d5" target="_blank" rel="noopener" class="alert-btn">
               <div class="btn-left">
                 <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
                 Lấy Key Free
               </div>
               <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
-            <!-- Nút dưới: Tải File -->
             <a id="freeModalDownloadBtn" href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="alert-btn">
               <div class="btn-left">
                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -888,14 +607,17 @@
         <div class="brand-logo">
           <img src="https://cdn.upanhlaylink.com/i/lNNH2V4K.png" alt="0704 Logo">
         </div>
+        <!-- CẬP NHẬT: Thêm Tích Xanh -->
         <div class="brand-text">
-          <h1>0704</h1>
+          <h1 style="display: flex; align-items: center;">
+            0704
+            <img src="https://cdn.upanhlaylink.com/i/ARZSk0jT.png" alt="Verified" style="width: 16px; height: 16px; margin-left: 6px; user-select: none; pointer-events: none; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+          </h1>
           <span>KEY & FILE PORTAL</span>
         </div>
       </div>
       <div class="header-right">
         <button type="button" class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Chuyển đổi giao diện Sáng / Tối" aria-label="Đổi giao diện Sáng Tối">
-          <!-- Icon Mặt Trời (Hiện ở chế độ Tối để bấm sang Sáng) -->
           <svg class="icon-sun" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -907,7 +629,6 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <!-- Icon Mặt Trăng (Hiện ở chế độ Sáng để bấm sang Tối) -->
           <svg class="icon-moon" viewBox="0 0 24 24">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
@@ -971,7 +692,7 @@
       </div>
     </div>
 
-    <!-- Vùng chứa các tab nội dung (Dùng CSS Grid giữ cố định kích thước) -->
+    <!-- Vùng chứa các tab nội dung -->
     <div class="file-container-wrapper">
       <!-- Nội dung Tab FREE -->
       <div id="paneFree" class="file-pane active">
@@ -1025,14 +746,14 @@
                     <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     <span>Xem Demo</span>
                   </button>
-                  <button type="button" class="btn btn-main" onclick="openFreeModal('AOV 0704 — .TIPA', 'https://hthseverkey.fun/getkey.php?public=007ae97c80468dde6a38fb471b4655025bae2f676a4aaee76be497e96be9e470', 'https://t.me/x0704cheat/566', this, event)">
+                  <button type="button" class="btn btn-main" onclick="openFreeModal('AOV 0704 — .TIPA', 'https://sobikey.xyz/getkey.php?public=f418e3aeb43d2b6ba600a8bca438e6080a6bb9d0c9b9c1453819e3d3ce2606d5', 'https://t.me/x0704cheat/566', this, event)">
                     Xem Thêm
                     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                   </button>
                 </div>
               </div>
               
-              <!-- Khung phát Video Demo -->
+              <!-- Khung phát Video Demo trượt mượt mà -->
               <div class="video-container">
                 <video src="https://github.com/obiday/0704/raw/refs/heads/main/v1c044g50000dbk7ig7og65ur0u39sb0.mp4" controls playsinline preload="metadata"></video>
               </div>
@@ -1090,7 +811,6 @@
     const alertOverlay = document.getElementById('alertOverlay');
     const freeModalOverlay = document.getElementById('freeModalOverlay');
 
-    // Chuyển đổi Sáng / Tối và lưu vào localStorage
     function toggleTheme() {
       const htmlEl = document.documentElement;
       const isLight = htmlEl.getAttribute('data-theme') === 'light';
@@ -1107,7 +827,6 @@
       } catch (e) {}
     }
 
-    // Đóng thông báo hệ thống mở đầu
     function closeAlert() {
       alertOverlay.classList.add('hidden');
       setTimeout(() => {
@@ -1115,7 +834,6 @@
       }, 300);
     }
 
-    // Mở bảng Xem Thêm cho các mục FREE
     function openFreeModal(title, keyUrl, downloadUrl, btnElement, event) {
       if (event) event.stopPropagation();
       
@@ -1135,7 +853,6 @@
       });
     }
 
-    // Đóng bảng Xem Thêm
     function closeFreeModal() {
       freeModalOverlay.classList.add('hidden');
       setTimeout(() => {
@@ -1155,7 +872,6 @@
       tabs.forEach(tab => tab.classList.remove('active'));
     });
 
-    // Chuyển tab danh mục File FREE / BUY (kèm tự động đóng video ở tab cũ để không bị giãn khung)
     function switchFileTab(type, btnElement) {
       const parentContainer = btnElement.closest('.container');
       const paneFree = parentContainer.querySelector('#paneFree');
@@ -1163,7 +879,7 @@
       const btnWrapFree = parentContainer.querySelector('#btnWrapFree');
       const btnWrapBuy = parentContainer.querySelector('#btnWrapBuy');
 
-      // Đóng các video đang mở khi chuyển tab để giữ nguyên kích thước chuẩn
+      // Đóng các video đang mở khi chuyển tab
       const allVideos = parentContainer.querySelectorAll('.video-container.show');
       allVideos.forEach(vc => {
         vc.classList.remove('show');
