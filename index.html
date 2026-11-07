@@ -10,7 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Khởi tạo Theme ngay lập tức để tránh chớp màn hình (FOUC) -->
   <script>
     (function() {
       try {
@@ -24,18 +23,17 @@
 
   <style>
     /* =========================================
-       1. KHAI BÁO BIẾN - MÀU SẮC & GIAO DIỆN
+       1. KHAI BÁO BIẾN - SẮC NÉT & NỀN ĐẶC (SOLID)
     ========================================= */
     :root {
       --bg: #030305;
       
-      /* Cập nhật: Làm thẻ trong suốt (kính mờ) */
-      --surface: rgba(15, 15, 22, 0.65);
-      --surface-hover: rgba(22, 22, 32, 0.75);
-      --surface-active: rgba(28, 28, 40, 0.85);
+      /* Nền đặc hoàn toàn để hết mờ nhòe */
+      --surface: #0a0a0f;
+      --surface-hover: #12121a;
+      --surface-active: #181822;
       
-      /* Cập nhật: Viền sắc nét hơn */
-      --border: rgba(255, 255, 255, 0.22);
+      --border: rgba(255, 255, 255, 0.18); /* Nét mảnh, sắc */
       
       --text: #ffffff;
       --text-muted: #8a8a9e;
@@ -43,20 +41,20 @@
       --cut: 13px;
       --cut-sm: 7px;
 
-      /* Biến phụ trợ cho Dark Mode */
-      /* Cập nhật: Tăng độ rõ của lưới nền */
-      --bg-radial: rgba(255, 255, 255, 0.12);
-      --bg-grid: rgba(255, 255, 255, 0.055);
-      --header-bg: rgba(12, 12, 16, 0.65);
+      /* Lưới nền mỏng lại, tinh tế không gây rối mắt */
+      --bg-radial: rgba(255, 255, 255, 0.08);
+      --bg-grid: rgba(255, 255, 255, 0.035); 
+      
+      --header-bg: rgba(8, 8, 12, 0.85); /* Trong suốt nhẹ cho header thôi */
       --header-shadow: rgba(0, 0, 0, 0.6);
       --logo-shadow: rgba(255, 255, 255, 0.18);
-      --overlay-bg: rgba(0, 0, 4, 0.72);
+      --overlay-bg: rgba(0, 0, 4, 0.85);
       --modal-bg: #0c0c10;
       --modal-shadow: rgba(0, 0, 0, 0.85);
       --alert-text-color: #a1a1b5;
       --alert-btn-border: rgba(255, 255, 255, 0.22);
       --alert-btn-bg: #14141b;
-      --active-grad: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.9) 100%);
+      --active-grad: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.9) 100%);
       --alert-grad: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.55) 100%);
       --active-drop-shadow: rgba(255, 255, 255, 0.15);
       --icon-box-bg: rgba(255, 255, 255, 0.03);
@@ -75,23 +73,20 @@
       --btn-disabled-bg: #121218;
     }
 
-    /* Bảng màu Chế độ Sáng (Light Mode) */
     html[data-theme="light"] {
       --bg: #f4f4f8;
       
-      /* Cập nhật: Thẻ kính mờ chế độ sáng */
-      --surface: rgba(255, 255, 255, 0.7);
-      --surface-hover: rgba(245, 245, 250, 0.8);
-      --surface-active: rgba(235, 235, 245, 0.9);
+      --surface: #ffffff;
+      --surface-hover: #f7f7fa;
+      --surface-active: #eeeef4;
       
-      --border: rgba(0, 0, 0, 0.2);
+      --border: rgba(0, 0, 0, 0.15);
       --text: #0f0f14;
       --text-muted: #646478;
 
-      /* Cập nhật: Lưới rõ nét cho chế độ sáng */
-      --bg-radial: rgba(0, 0, 0, 0.06);
-      --bg-grid: rgba(0, 0, 0, 0.09);
-      --header-bg: rgba(255, 255, 255, 0.75);
+      --bg-radial: rgba(0, 0, 0, 0.04);
+      --bg-grid: rgba(0, 0, 0, 0.04);
+      --header-bg: rgba(255, 255, 255, 0.9);
       --header-shadow: rgba(0, 0, 0, 0.07);
       --logo-shadow: rgba(0, 0, 0, 0.12);
       --overlay-bg: rgba(15, 15, 22, 0.45);
@@ -100,7 +95,7 @@
       --alert-text-color: #525266;
       --alert-btn-border: rgba(0, 0, 0, 0.2);
       --alert-btn-bg: #f5f5fa;
-      --active-grad: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.8) 100%);
+      --active-grad: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.8) 100%);
       --alert-grad: linear-gradient(135deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.45) 100%);
       --active-drop-shadow: rgba(0, 0, 0, 0.12);
       --icon-box-bg: rgba(0, 0, 0, 0.03);
@@ -131,7 +126,6 @@
       -webkit-text-size-adjust: 100%;
     }
 
-    /* Thanh cuộn phong cách Minimal */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
@@ -195,134 +189,89 @@
        3. CHI TIẾT HEADER & THÀNH PHẦN
     ========================================= */
     .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      padding: 14px 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; padding: 14px 16px;
       background: var(--header-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       box-shadow: 0 8px 32px var(--header-shadow);
       transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     .brand-wrap { display: flex; align-items: center; gap: 12px; }
     .brand-logo {
-      width: 38px; height: 38px;
-      background: #ffffff;
-      border-radius: 6px;
+      width: 38px; height: 38px; background: #ffffff; border-radius: 6px;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 0 16px var(--logo-shadow);
-      overflow: hidden;
-      flex-shrink: 0;
+      box-shadow: 0 0 16px var(--logo-shadow); overflow: hidden; flex-shrink: 0;
       border: 1px solid var(--border);
     }
     .brand-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
     
     .brand-text h1 {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      line-height: 1.2;
+      font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 700;
+      letter-spacing: 0.1em; line-height: 1.2;
     }
     .brand-text span {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em;
     }
 
     .header-right { display: flex; align-items: center; gap: 8px; }
 
-    /* Nút Chuyển Giao Diện */
     .theme-toggle {
-      width: 32px; height: 32px;
-      border-radius: 6px;
-      background: var(--icon-box-bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
+      width: 32px; height: 32px; border-radius: 6px;
+      background: var(--icon-box-bg); border: 1px solid var(--border);
+      color: var(--text); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s ease; flex-shrink: 0;
     }
-    .theme-toggle:hover {
-      background: var(--surface-hover);
-      border-color: var(--icon-box-active-border);
-    }
+    .theme-toggle:hover { background: var(--surface-hover); border-color: var(--icon-box-active-border); }
     .theme-toggle svg { width: 15px; height: 15px; }
     .theme-toggle .icon-sun { display: block; }
     .theme-toggle .icon-moon { display: none; }
     html[data-theme="light"] .theme-toggle .icon-sun { display: none; }
     html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
 
-    /* Nút Online (Status) */
     .status-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 600;
-      color: #10b981;
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      padding: 6px 11px;
-      border-radius: 6px;
-      display: flex; align-items: center; gap: 7px;
-      height: 32px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+      color: #10b981; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 6px 11px; border-radius: 6px; display: flex; align-items: center; gap: 7px; height: 32px;
     }
     .status-dot {
-      width: 6px; height: 6px;
-      background: #10b981;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #10b981;
-      animation: pulse 2s infinite;
+      width: 6px; height: 6px; background: #10b981; border-radius: 50%;
+      box-shadow: 0 0 8px #10b981; animation: pulse 2s infinite;
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.45; transform: scale(0.85); }
-    }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.85); } }
 
     /* Modal / Alert Overlay */
     .alert-overlay {
-      position: fixed; inset: 0;
-      background: var(--overlay-bg);
+      position: fixed; inset: 0; background: var(--overlay-bg);
       backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
       display: flex; justify-content: center; align-items: center;
-      padding: 16px; z-index: 999;
-      opacity: 1; visibility: visible;
+      padding: 16px; z-index: 999; opacity: 1; visibility: visible;
       transition: opacity 0.3s ease, visibility 0.3s ease;
     }
     .alert-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
     
     .alert-box {
-      width: 100%; max-width: 420px;
-      transform: translateY(0) scale(1);
+      width: 100%; max-width: 420px; transform: translateY(0) scale(1);
       transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
       filter: drop-shadow(0 20px 40px var(--modal-shadow));
     }
     .alert-overlay.hidden .alert-box { transform: translateY(16px) scale(0.96); }
     
     .alert-border {
-      background: var(--alert-grad);
-      padding: 1.5px;
+      background: var(--alert-grad); padding: 1px;
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
     }
     .alert-inner {
-      background: var(--modal-bg);
-      padding: 24px 20px;
+      background: var(--modal-bg); padding: 24px 20px;
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
       transition: background 0.25s ease;
     }
     
     .alert-title {
-      font-family: 'JetBrains Mono', monospace; font-size: 13px;
-      font-weight: 700; color: var(--text);
-      text-transform: uppercase; letter-spacing: 0.08em;
-      margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--text);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
     }
     .alert-title svg { width: 18px; height: 18px; color: var(--text); filter: drop-shadow(0 0 6px var(--logo-shadow)); }
     .alert-text { font-size: 13.5px; line-height: 1.55; color: var(--alert-text-color); margin-bottom: 20px; }
@@ -332,14 +281,12 @@
       font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
       padding: 12px 16px; color: var(--text) !important;
       display: flex; align-items: center; justify-content: space-between;
-      position: relative; z-index: 1; isolation: isolate;
-      background: var(--alert-btn-border);
+      position: relative; z-index: 1; isolation: isolate; background: var(--alert-btn-border);
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
       transition: all 0.2s ease;
     }
     .alert-btn::before {
-      content: ''; position: absolute; inset: 1.5px;
-      background: var(--alert-btn-bg); z-index: -1;
+      content: ''; position: absolute; inset: 1px; background: var(--alert-btn-bg); z-index: -1;
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
       transition: background 0.2s ease;
     }
@@ -356,8 +303,8 @@
       display: inline-flex; align-items: center; gap: 6px; padding: 4px 0; transition: color 0.2s ease;
     }
     .btn-close-text:hover { color: var(--text); }
-    .btn-close-text svg { transition: transform 0.2s ease; }
     .btn-close-text:hover svg { transform: translateX(3px); }
+    .btn-close-text svg { transition: transform 0.2s ease; }
 
     /* Phần Khung Tab chung */
     .section-head {
@@ -382,7 +329,6 @@
       padding: 11px; text-align: center; background: var(--surface); border: none;
       color: var(--text-muted); cursor: pointer;
       clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       transition: all 0.25s ease;
     }
     .cat-btn-wrap:hover .cat-btn { background: var(--surface-hover); color: var(--text); }
@@ -400,7 +346,7 @@
     }
     .file-pane.active { opacity: 1; visibility: visible; pointer-events: auto; z-index: 2; }
 
-    /* Khung Tab vát góc - GLASSMORPHISM */
+    /* Khung Tab vát góc - NỀN ĐẶC SẮC NÉT */
     .tab-wrap-outer {
       width: 100%; cursor: pointer;
       transition: filter 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
@@ -412,7 +358,7 @@
     }
     
     .tab-border {
-      background: var(--border); padding: 1.5px;
+      background: var(--border); padding: 1px;
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
       transition: background 0.25s ease;
     }
@@ -422,7 +368,6 @@
       background: var(--surface); padding: 15px 16px;
       display: flex; flex-direction: column; gap: 12px;
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       transition: background 0.25s ease;
     }
     .tab-wrap-outer:hover .tab-inner { background: var(--surface-hover); }
@@ -468,7 +413,6 @@
       transition: background 0.2s ease;
     }
     
-    /* Hiệu ứng Glow cho Button khi Hover */
     .btn:hover { background: var(--btn-hover-border); filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.15)); }
     html[data-theme="light"] .btn:hover { filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15)); }
     .btn:hover::before { background: var(--btn-hover-bg); }
@@ -486,30 +430,14 @@
        4. KHUNG VIDEO DẠNG TRƯỢT (ACCORDION)
     ========================================= */
     .video-container {
-      width: 100%;
-      border-radius: 6px;
-      overflow: hidden;
-      border: 1.5px solid var(--border);
-      background: #000;
-      
-      /* Cấu hình trượt mượt mà bằng CSS Grid */
-      display: grid;
-      grid-template-rows: 0fr;
+      width: 100%; border-radius: 6px; overflow: hidden;
+      border: 1px solid var(--border); background: #000;
+      display: grid; grid-template-rows: 0fr;
       transition: grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1), margin-top 0.3s, opacity 0.3s;
-      margin-top: 0;
-      opacity: 0;
+      margin-top: 0; opacity: 0;
     }
-    .video-container.show {
-      grid-template-rows: 1fr;
-      margin-top: 12px;
-      opacity: 1;
-    }
-    .video-container video {
-      min-height: 0; /* Rất quan trọng để Grid trượt hoạt động */
-      width: 100%;
-      max-height: 280px;
-      display: block;
-    }
+    .video-container.show { grid-template-rows: 1fr; margin-top: 12px; opacity: 1; }
+    .video-container video { min-height: 0; width: 100%; max-height: 280px; display: block; }
 
     svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 
@@ -581,7 +509,7 @@
               </div>
               <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
-            <a id="freeModalDownloadBtn" href="https://t.me/x0704cheat/563" target="_blank" rel="noopener" class="alert-btn">
+            <a id="freeModalDownloadBtn" href="https://t.me/x0704cheat/568" target="_blank" rel="noopener" class="alert-btn">
               <div class="btn-left">
                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Tải File
@@ -607,7 +535,6 @@
         <div class="brand-logo">
           <img src="https://cdn.upanhlaylink.com/i/lNNH2V4K.png" alt="0704 Logo">
         </div>
-        <!-- CẬP NHẬT: Thêm Tích Xanh -->
         <div class="brand-text">
           <h1 style="display: flex; align-items: center;">
             0704
