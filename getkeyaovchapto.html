@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="color-scheme" content="dark light">
+  <title>AOV CHẤP TỐ — Free Key</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem('0704_theme');
+        if (savedTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    /* =========================================
+       1. KHAI BÁO BIẾN - SẮC NÉT & NỀN ĐẶC (SOLID)
+    ========================================= */
+    :root {
+      --bg: #030305;
+      
+      --surface: #0a0a0f;
+      --surface-hover: #12121a;
+      --surface-active: #181822;
+      
+      --border: rgba(255, 255, 255, 0.18); 
+      
+      --text: #ffffff;
+      --text-muted: #8a8a9e;
+      --radius: 6px;
+      --cut: 13px;
+      --cut-sm: 7px;
+
+      --bg-radial: rgba(255, 255, 255, 0.08);
+      --bg-grid: rgba(255, 255, 255, 0.035); 
+      
+      --header-bg: rgba(8, 8, 12, 0.85); 
+      --header-shadow: rgba(0, 0, 0, 0.6);
+      --logo-shadow: rgba(255, 255, 255, 0.18);
+      --icon-box-bg: rgba(255, 255, 255, 0.03);
+      --icon-box-active-border: rgba(255, 255, 255, 0.35);
+      --active-grad: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.9) 100%);
+      --active-drop-shadow: rgba(255, 255, 255, 0.15);
+      
+      --btn-border: rgba(255, 255, 255, 0.24);
+      --btn-bg: #171720;
+      --btn-hover-border: rgba(255, 255, 255, 0.48);
+      --btn-hover-bg: #22222e;
+    }
+
+    html[data-theme="light"] {
+      --bg: #f4f4f8;
+      
+      --surface: #ffffff;
+      --surface-hover: #f7f7fa;
+      --surface-active: #eeeef4;
+      
+      --border: rgba(0, 0, 0, 0.15);
+      --text: #0f0f14;
+      --text-muted: #646478;
+
+      --bg-radial: rgba(0, 0, 0, 0.04);
+      --bg-grid: rgba(0, 0, 0, 0.04);
+      --header-bg: rgba(255, 255, 255, 0.9);
+      --header-shadow: rgba(0, 0, 0, 0.07);
+      --logo-shadow: rgba(0, 0, 0, 0.12);
+      
+      --icon-box-bg: rgba(0, 0, 0, 0.03);
+      --icon-box-active-border: rgba(0, 0, 0, 0.35);
+      --active-grad: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.8) 100%);
+      --active-drop-shadow: rgba(0, 0, 0, 0.12);
+
+      --btn-border: rgba(0, 0, 0, 0.22);
+      --btn-bg: #f3f3f8;
+      --btn-hover-border: rgba(0, 0, 0, 0.45);
+      --btn-hover-bg: #e8e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent !important; }
+    html { overflow-y: scroll; -webkit-text-size-adjust: 100%; }
+
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    html, body {
+      background-color: var(--bg); color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+    a, button { color: inherit; text-decoration: none; outline: none; }
+
+    body {
+      background-image: 
+        radial-gradient(circle at 50% -10%, var(--bg-radial) 0%, transparent 55%),
+        linear-gradient(to right, var(--bg-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--bg-grid) 1px, transparent 1px);
+      background-size: 100% 100%, 28px 28px, 28px 28px;
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; justify-content: center; align-items: flex-start;
+      padding: 24px 14px;
+    }
+
+    .container { width: 100%; max-width: 480px; margin: auto 0; position: relative; z-index: 1; }
+
+    /* HOẠT ẢNH TRƯỢT LÊN */
+    @keyframes slideUpFade {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .header { animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .section-head { animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
+    .tab-wrap-outer { animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .tab-wrap-outer:nth-of-type(1) { animation-delay: 0.15s; }
+    .tab-wrap-outer:nth-of-type(2) { animation-delay: 0.25s; }
+
+    /* HEADER */
+    .header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; padding: 14px 16px;
+      background: var(--header-bg);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px var(--header-shadow);
+      transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .brand-wrap { display: flex; align-items: center; gap: 12px; }
+    .brand-logo {
+      width: 38px; height: 38px; background: #ffffff; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 16px var(--logo-shadow); overflow: hidden; flex-shrink: 0;
+      border: 1px solid var(--border);
+      transition: transform 0.2s ease;
+    }
+    .brand-logo:hover { transform: scale(1.05); }
+    .brand-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    
+    .brand-text { display: flex; flex-direction: column; gap: 2px; justify-content: center; }
+    .brand-text h1 {
+      font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700;
+      letter-spacing: 0.05em; line-height: 1; white-space: nowrap;
+    }
+    .brand-text span {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; line-height: 1;
+    }
+
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .theme-toggle {
+      width: 32px; height: 32px; border-radius: 6px;
+      background: var(--icon-box-bg); border: 1px solid var(--border);
+      color: var(--text); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s ease; flex-shrink: 0;
+    }
+    .theme-toggle:hover { background: var(--surface-hover); border-color: var(--icon-box-active-border); }
+    .theme-toggle svg { width: 15px; height: 15px; }
+    .theme-toggle .icon-sun { display: block; }
+    .theme-toggle .icon-moon { display: none; }
+    html[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+    html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+    /* SECTION HEAD */
+    .section-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; padding: 0 4px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;
+    }
+
+    /* KHUNG TAB (NỀN ĐẶC SẮC NÉT) */
+    .tab-wrap-outer {
+      width: 100%; margin-bottom: 24px;
+      transition: filter 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .tab-wrap-outer.active {
+      transform: translateY(-2px);
+      filter: drop-shadow(0 12px 24px var(--active-drop-shadow));
+      z-index: 2;
+    }
+    .tab-border {
+      background: var(--border); padding: 1px;
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      transition: background 0.25s ease;
+    }
+    .tab-wrap-outer.active .tab-border { background: var(--active-grad); }
+    .tab-inner {
+      background: var(--surface); padding: 20px;
+      display: flex; flex-direction: column; gap: 12px;
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      transition: background 0.25s ease;
+    }
+    .tab-wrap-outer.active .tab-inner { background: var(--surface-active); }
+
+    /* NỘI DUNG CÁC BƯỚC (STEPS) */
+    .step-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding-bottom: 14px; margin-bottom: 14px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .step-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+    
+    .step-number {
+      width: 28px; height: 28px;
+      background: var(--icon-box-bg); border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text); font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; font-weight: 700; flex-shrink: 0;
+    }
+    .step-content { display: flex; flex-direction: column; gap: 4px; padding-top: 2px;}
+    .step-title { font-size: 14px; font-weight: 600; color: var(--text); }
+    .step-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+
+    /* HỘP HIỂN THỊ THÔNG TIN SERVER/KEY MỚI CẬP NHẬT */
+    .server-status-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex; flex-direction: column; gap: 14px;
+      margin-bottom: 6px;
+    }
+    .status-row { display: flex; justify-content: space-between; align-items: center; }
+    .status-col { display: flex; flex-direction: column; gap: 4px; }
+    .status-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+    .status-val { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px;}
+    
+    .pulse-dot {
+      width: 8px; height: 8px; background: #10b981; border-radius: 50%;
+      box-shadow: 0 0 8px #10b981; animation: pulse 2s infinite;
+    }
+    .dash-line { width: 100%; height: 1px; border-bottom: 1px dashed var(--border); }
+
+    /* BUTTON CHUYỂN HƯỚNG */
+    .btn {
+      font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600;
+      height: 46px; padding: 0 15px; color: var(--text) !important;
+      border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; user-select: none; position: relative; z-index: 1; isolation: isolate;
+      background: var(--btn-border); width: 100%;
+      clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .btn::before {
+      content: ''; position: absolute; inset: 1.5px; background: var(--btn-bg); z-index: -1;
+      clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+      transition: background 0.2s ease;
+    }
+    
+    .btn-main { background: var(--text); color: var(--bg) !important; }
+    .btn-main::before { background: var(--text); }
+    .btn-main:hover { filter: drop-shadow(0 6px 16px rgba(255, 255, 255, 0.2)); transform: translateY(-1px); }
+    html[data-theme="light"] .btn-main:hover { filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.2)); }
+    
+    svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header Cập Nhật -->
+    <header class="header">
+      <div class="brand-wrap">
+        <a href="index.html" class="brand-logo" title="Trở về trang chủ">
+          <img src="https://cdn.upanhlaylink.com/i/fBZvOBEN.jpeg" alt="AOV Logo">
+        </a>
+        <div class="brand-text">
+          <h1>AOV CHẤP TỐ IPA</h1>
+          <span>Phiên Bản 6.0</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button type="button" class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Chuyển đổi giao diện Sáng / Tối">
+          <svg class="icon-sun" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Phần 1: Hướng dẫn -->
+    <div class="section-head">
+      <span>01. Hướng dẫn nhận Key</span>
+      <span>TUTORIAL</span>
+    </div>
+
+    <div class="tab-wrap-outer">
+      <div class="tab-border">
+        <div class="tab-inner">
+          
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Nhấp vào nút Lấy Key</div>
+              <div class="step-desc">Kéo xuống dưới và nhấp vào nút chuyển hướng lấy Key để hệ thống tạo link cho bạn.</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Vượt qua Link rút gọn</div>
+              <div class="step-desc">Hoàn thành các bước xác minh Captcha hoặc chờ đếm ngược trên trang quảng cáo để xác thực.</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Copy và Sử dụng</div>
+              <div class="step-desc">Sau khi vượt link thành công, trang web sẽ hiện mã Key. Hãy copy và dán vào Menu trong Game.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Phần 2: Lấy Key -->
+    <div class="section-head">
+      <span>02. Thông tin & Liên kết</span>
+      <span>GET KEY</span>
+    </div>
+
+    <!-- Tab Active nổi bật hơn -->
+    <div class="tab-wrap-outer active">
+      <div class="tab-border">
+        <div class="tab-inner">
+          
+          <!-- Bảng Thông Tin Gói Get Key Mới -->
+          <div class="server-status-box">
+            <div class="status-row">
+              <span class="status-label">Gói Đang Chọn</span>
+              <span class="status-val" style="color: #facc15; font-size: 15px; letter-spacing: 0.5px;">AOV CHẤP TỐ</span>
+            </div>
+            
+            <div class="dash-line"></div>
+            
+            <div class="status-row">
+              <div class="status-col">
+                <span class="status-label">Trạng thái Server</span>
+                <span class="status-val">
+                  <span class="pulse-dot"></span> Đang hoạt động
+                </span>
+              </div>
+              <div class="status-col" style="text-align: right;">
+                <span class="status-label">Hạn sử dụng Key</span>
+                <span class="status-val" style="color: #60a5fa;">24 Giờ</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nút Lấy Key Cập Nhật -->
+          <a href="https://link4m.org/JZLMTOGD" class="btn btn-main" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+            GET KEY AOV CHẤP TỐ
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const isLight = htmlEl.getAttribute('data-theme') === 'light';
+      const nextTheme = isLight ? 'dark' : 'light';
+
+      if (nextTheme === 'light') {
+        htmlEl.setAttribute('data-theme', 'light');
+      } else {
+        htmlEl.removeAttribute('data-theme');
+      }
+
+      try {
+        localStorage.setItem('0704_theme', nextTheme);
+      } catch (e) {}
+    }
+  </script>
+
+</body>
+</html>
